@@ -1,6 +1,7 @@
 "use client"
 import { useState, useRef, useEffect } from 'react';
-import { Send, Plus, Menu, Trash2, Edit2, MessageSquare, User, Sparkles } from 'lucide-react';
+import { Send, Menu , User, Sparkles } from 'lucide-react';
+import { getGroqChatCompletion } from './modelSetup/model';
 
 interface Message {
   id: number;
@@ -46,20 +47,16 @@ export default function Dashboard() {
     inputRef.current?.focus();
   }, [currentChatId]);
 
-  const generateBotResponse = (userInput: string): string => {
+  const generateBotResponse = async(userInput: string) => {
     const input = userInput.toLowerCase();
-    if (input.includes('hello') || input.includes('hi')) {
-      return "Hello! I'm here to help. What would you like to know?";
-    } else if (input.includes('help')) {
-      return "I can assist you with questions, provide information, or just have a conversation. What do you need help with?";
-    } else if (input.includes('how are you')) {
-      return "I'm functioning well, thank you for asking! How can I assist you today?";
-    } else if (input.includes('what can you do')) {
-      return "I can help answer questions, provide information, assist with tasks, and engage in conversations. Try asking me anything!";
-    } else if (input.includes('bye')) {
-      return "Goodbye! Feel free to return anytime you need assistance.";
-    } else {
-      return "That's an interesting point. Could you tell me more about what you're looking for?";
+
+    try {
+      const completions = await getGroqChatCompletion(input);
+      const botmessage = completions.choices[0]?.message?.content || "No response";
+      return botmessage;
+    } catch (error) {
+      console.log("Groq API Error" , error)
+      return "No response";
     }
   };
 
@@ -88,21 +85,22 @@ export default function Dashboard() {
     setIsTyping(true);
 
     // Simulate bot response
-    setTimeout(() => {
-      const botMessage: Message = {
-        id: Date.now() + 1,
-        text: generateBotResponse(inputValue),
-        sender: 'bot',
-        timestamp: new Date()
-      };
-      
+
+    const botRespone = await generateBotResponse(userMessage.text);
+    const botMessage: Message = {
+      id: Date.now(),
+      text: botRespone,
+      sender: 'bot',
+      timestamp: new Date()
+    };
+  
       setChats(prev => prev.map(chat => 
         chat.id === currentChatId 
           ? { ...chat, messages: [...chat.messages, botMessage] }
           : chat
       ));
       setIsTyping(false);
-    }, 1000);
+    
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
@@ -114,8 +112,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
-      
-
+            
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
