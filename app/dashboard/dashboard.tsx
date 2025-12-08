@@ -1,7 +1,7 @@
 "use client"
 import { useState, useRef, useEffect } from 'react';
 import { Send, Menu , User, Sparkles } from 'lucide-react';
-import { getGroqChatCompletion } from './modelSetup/model';
+import { getGroqChatCompletion } from '../../lib/model';
 
 interface Message {
   id: number;
@@ -189,7 +189,7 @@ export default function Dashboard() {
                     </div>
                     <div className={`px-4 py-3 rounded-2xl ${
                       message.sender === 'bot'
-                        ? 'bg-white border border-gray-200'
+                        ? 'bg-white border text-black border-gray-200'
                         : 'bg-gray-900 text-white'
                     }`}>
                       <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
@@ -204,7 +204,7 @@ export default function Dashboard() {
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                       <Sparkles className="h-5 w-5 text-white" />
                     </div>
-                    <div className="bg-white border border-gray-200 px-4 py-3 rounded-2xl">
+                    <div className="bg-white border text-black border-gray-200 px-4 py-3 rounded-2xl">
                       <div className="flex space-x-2">
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
