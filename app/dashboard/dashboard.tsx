@@ -1,12 +1,13 @@
-"use client"
-import { useState, useRef, useEffect } from 'react';
-import { Send, Menu , User, Sparkles } from 'lucide-react';
-import { getGroqChatCompletion } from '../../lib/model';
+"use client";
+import { useState, useRef, useEffect } from "react";
+import { Send, Menu, User, Sparkles } from "lucide-react";
+import { getGroqChatCompletion } from "../../lib/model";
+import { SideBar } from "./sidebar";
 
 interface Message {
   id: number;
   text: string;
-  sender: 'user' | 'bot';
+  sender: "user" | "bot";
   timestamp: Date;
 }
 
@@ -21,22 +22,22 @@ export default function Dashboard() {
   const [chats, setChats] = useState<Chat[]>([
     {
       id: 1,
-      title: 'New Chat',
+      title: "New Chat",
       messages: [],
-      createdAt: new Date()
-    }
+      createdAt: new Date(),
+    },
   ]);
   const [currentChatId, setCurrentChatId] = useState<number>(1);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const currentChat = chats.find(chat => chat.id === currentChatId);
+  const currentChat = chats.find((chat) => chat.id === currentChatId);
 
   const scrollToBottom = (): void => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -47,15 +48,16 @@ export default function Dashboard() {
     inputRef.current?.focus();
   }, [currentChatId]);
 
-  const generateBotResponse = async(userInput: string) => {
+  const generateBotResponse = async (userInput: string) => {
     const input = userInput.toLowerCase();
 
     try {
       const completions = await getGroqChatCompletion(input);
-      const botmessage = completions.choices[0]?.message?.content || "No response";
+      const botmessage =
+        completions.choices[0]?.message?.content || "No response";
       return botmessage;
     } catch (error) {
-      console.log("Groq API Error" , error)
+      console.log("Groq API Error", error);
       return "No response";
     }
   };
@@ -66,22 +68,28 @@ export default function Dashboard() {
     const userMessage: Message = {
       id: Date.now(),
       text: inputValue,
-      sender: 'user',
-      timestamp: new Date()
+      sender: "user",
+      timestamp: new Date(),
     };
 
     // Update chat with user message
-    setChats(prev => prev.map(chat => 
-      chat.id === currentChatId 
-        ? { 
-            ...chat, 
-            messages: [...chat.messages, userMessage],
-            title: chat.messages.length === 0 ? inputValue.slice(0, 30) + (inputValue.length > 30 ? '...' : '') : chat.title
-          }
-        : chat
-    ));
+    setChats((prev) =>
+      prev.map((chat) =>
+        chat.id === currentChatId
+          ? {
+              ...chat,
+              messages: [...chat.messages, userMessage],
+              title:
+                chat.messages.length === 0
+                  ? inputValue.slice(0, 30) +
+                    (inputValue.length > 30 ? "..." : "")
+                  : chat.title,
+            }
+          : chat,
+      ),
+    );
 
-    setInputValue('');
+    setInputValue("");
     setIsTyping(true);
 
     // Simulate bot response
@@ -90,21 +98,24 @@ export default function Dashboard() {
     const botMessage: Message = {
       id: Date.now(),
       text: botRespone,
-      sender: 'bot',
-      timestamp: new Date()
+      sender: "bot",
+      timestamp: new Date(),
     };
-  
-      setChats(prev => prev.map(chat => 
-        chat.id === currentChatId 
+
+    setChats((prev) =>
+      prev.map((chat) =>
+        chat.id === currentChatId
           ? { ...chat, messages: [...chat.messages, botMessage] }
-          : chat
-      ));
-      setIsTyping(false);
-    
+          : chat,
+      ),
+    );
+    setIsTyping(false);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+  const handleKeyPress = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>,
+  ): void => {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -112,7 +123,10 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
-            
+      {sidebarOpen && (
+        <SideBar sidebarOpen={sidebarOpen} chats={chats} setchats={setChats} />
+      )}
+
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
@@ -126,7 +140,9 @@ export default function Dashboard() {
             </button>
             <div className="flex items-center space-x-2">
               <Sparkles className="h-5 w-5 text-purple-600" />
-              <h1 className="text-lg font-semibold text-gray-900">AI Assistant</h1>
+              <h1 className="text-lg font-semibold text-gray-900">
+                AI Assistant
+              </h1>
             </div>
           </div>
         </div>
@@ -146,21 +162,35 @@ export default function Dashboard() {
                 <p className="text-gray-600 mb-8">
                   Ask me anything or start a conversation
                 </p>
-                
+
                 {/* Suggestion Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                   {[
-                    { title: 'Explain concepts', text: 'Help me understand complex topics' },
-                    { title: 'Write content', text: 'Draft emails, articles, or messages' },
-                    { title: 'Solve problems', text: 'Get help with tasks and challenges' },
-                    { title: 'Learn something', text: 'Discover new information' }
+                    {
+                      title: "Explain concepts",
+                      text: "Help me understand complex topics",
+                    },
+                    {
+                      title: "Write content",
+                      text: "Draft emails, articles, or messages",
+                    },
+                    {
+                      title: "Solve problems",
+                      text: "Get help with tasks and challenges",
+                    },
+                    {
+                      title: "Learn something",
+                      text: "Discover new information",
+                    },
                   ].map((suggestion, idx) => (
                     <button
                       key={idx}
                       onClick={() => setInputValue(suggestion.text)}
                       className="p-4 bg-white border border-gray-200 rounded-xl hover:border-blue-500 hover:shadow-md transition-all text-left"
                     >
-                      <p className="font-medium text-gray-900 mb-1">{suggestion.title}</p>
+                      <p className="font-medium text-gray-900 mb-1">
+                        {suggestion.title}
+                      </p>
                       <p className="text-sm text-gray-600">{suggestion.text}</p>
                     </button>
                   ))}
@@ -173,26 +203,34 @@ export default function Dashboard() {
               {currentChat?.messages.map((message) => (
                 <div
                   key={message.id}
-                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`flex items-start space-x-3 max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                    <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                      message.sender === 'bot' 
-                        ? 'bg-gradient-to-br from-blue-500 to-purple-600' 
-                        : 'bg-gray-700'
-                    }`}>
-                      {message.sender === 'bot' ? (
+                  <div
+                    className={`flex items-start space-x-3 max-w-[80%] ${message.sender === "user" ? "flex-row-reverse space-x-reverse" : ""}`}
+                  >
+                    <div
+                      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                        message.sender === "bot"
+                          ? "bg-gradient-to-br from-blue-500 to-purple-600"
+                          : "bg-gray-700"
+                      }`}
+                    >
+                      {message.sender === "bot" ? (
                         <Sparkles className="h-5 w-5 text-white" />
                       ) : (
                         <User className="h-5 w-5 text-white" />
                       )}
                     </div>
-                    <div className={`px-4 py-3 rounded-2xl ${
-                      message.sender === 'bot'
-                        ? 'bg-white border text-black border-gray-200'
-                        : 'bg-gray-900 text-white'
-                    }`}>
-                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                    <div
+                      className={`px-4 py-3 rounded-2xl ${
+                        message.sender === "bot"
+                          ? "bg-white border text-black border-gray-200"
+                          : "bg-gray-900 text-white"
+                      }`}
+                    >
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                        {message.text}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -207,8 +245,14 @@ export default function Dashboard() {
                     <div className="bg-white border text-black border-gray-200 px-4 py-3 rounded-2xl">
                       <div className="flex space-x-2">
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                        <div
+                          className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                          style={{ animationDelay: "0.2s" }}
+                        ></div>
+                        <div
+                          className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                          style={{ animationDelay: "0.4s" }}
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -232,7 +276,7 @@ export default function Dashboard() {
                 placeholder="Type your message..."
                 rows={1}
                 className="flex-1 bg-transparent px-3 py-2 outline-none resize-none max-h-32 text-gray-900 placeholder-gray-400"
-                style={{ minHeight: '40px' }}
+                style={{ minHeight: "40px" }}
               />
               <button
                 onClick={handleSend}
