@@ -133,13 +133,24 @@ export default function Dashboard() {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
-        <TopBar setSidebarOpen={()=> setSidebarOpen(!sidebarOpen)}/>
+        <TopBar setSidebarOpen={() => setSidebarOpen(!sidebarOpen)} />
 
         {/* Messages Area */}
-        <ChatArea currentChat={currentChat} isTyping={isTyping} messagesEndRef={messagesEndRef} setInputValue={setInputValue}/>
+        <ChatArea
+          currentChat={currentChat}
+          isTyping={isTyping}
+          messagesEndRef={messagesEndRef}
+          setInputValue={setInputValue}
+        />
 
         {/* Input Area */}
-        <InputArea inputRef={inputRef} inputValue={inputValue} setInputValue={setInputValue} handleSend={handleSend} handleKeyPress={handleKeyPress} />
+        <InputArea
+          inputRef={inputRef}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          handleSend={handleSend}
+          handleKeyPress={handleKeyPress}
+        />
       </div>
     </div>
   );
