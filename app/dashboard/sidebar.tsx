@@ -62,7 +62,10 @@ export const SideBar = ({ sidebarOpen, chats, setchats }: SideBarProps) => {
         {chats.map((chat) => (
           <div
             key={chat.id}
-            onClick={() => setCurrentChatId(chat.id)}
+            onClick={() => {
+              setCurrentChatId(chat.id)
+              console.log("ChatId :", chat.id)
+            }}
             className={`group flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
               currentChatId === chat.id ? "bg-gray-800" : "hover:bg-gray-800"
             }`}
