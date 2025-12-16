@@ -20,11 +20,17 @@ interface SideBarProps {
   sidebarOpen: boolean;
   chats: Chat[];
   setchats: (value: Chat[] | ((prev: Chat[]) => Chat[])) => void;
+  currentChatId: number | null;
+  setCurrentChatId: (id: number | null) => void;
 }
 
-export const SideBar = ({ sidebarOpen, chats, setchats }: SideBarProps) => {
-  const [currentChatId, setCurrentChatId] = useState(chats[0].id);
-
+export const SideBar = ({
+  sidebarOpen,
+  chats,
+  setchats,
+  currentChatId,
+  setCurrentChatId,
+}: SideBarProps) => {
   const createNewChat = () => {
     const newChat: Chat = {
       id: Date.now(),

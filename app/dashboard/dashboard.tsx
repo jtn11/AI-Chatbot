@@ -30,7 +30,7 @@ export default function Dashboard() {
       createdAt: new Date(),
     },
   ]);
-  const [currentChatId, setCurrentChatId] = useState<number>(1);
+  const [currentChatId, setCurrentChatId] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
@@ -38,6 +38,10 @@ export default function Dashboard() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const currentChat = chats.find((chat) => chat.id === currentChatId);
+
+  // if(!currentChat){
+  //   return (<div>Chat not loaded </div>)
+  // }
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -127,7 +131,13 @@ export default function Dashboard() {
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
       {sidebarOpen && (
-        <SideBar sidebarOpen={sidebarOpen} chats={chats} setchats={setChats} />
+        <SideBar
+          sidebarOpen={sidebarOpen}
+          chats={chats}
+          setchats={setChats}
+          currentChatId={currentChatId}
+          setCurrentChatId={setCurrentChatId}
+        />
       )}
 
       {/* Main Chat Area */}

@@ -27,6 +27,10 @@ export const ChatArea = ({
   messagesEndRef,
   setInputValue,
 }: chatAreaProps) => {
+  // if(!currentChat){
+  //     return <div className="h-full text-gray-900">chat not loaded </div>
+  // }
+
   return (
     <div className="flex-1 overflow-y-auto">
       {currentChat?.messages.length === 0 ? (
