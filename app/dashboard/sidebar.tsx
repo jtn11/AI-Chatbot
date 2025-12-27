@@ -1,6 +1,5 @@
 "use client";
 import { MessageSquare, Plus, Trash2, User } from "lucide-react";
-import { useState } from "react";
 
 interface Chat {
   id: number;
@@ -77,7 +76,7 @@ export const SideBar = ({
             }`}
           >
             <div className="flex items-center space-x-3 flex-1 min-w-0">
-              <MessageSquare className="h-4 w-4 flex-shrink-0 text-gray-400" />
+              <MessageSquare className="h-4 w-4 shrink-0 text-gray-400" />
               <span className="text-sm truncate">{chat.title}</span>
             </div>
             <button
@@ -96,7 +95,7 @@ export const SideBar = ({
       {/* Sidebar Footer */}
       <div className="p-4 border-t border-gray-700">
         <div className="flex items-center space-x-3 p-3 bg-gray-800 rounded-lg">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
             <User className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
