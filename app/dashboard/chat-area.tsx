@@ -28,8 +28,8 @@ export const ChatArea = ({
   messagesEndRef,
   setInputValue,
 }: chatAreaProps) => {
-  if(!currentChat){
-      return <ChatsNotLoaded/>
+  if (!currentChat) {
+    return <ChatsNotLoaded />;
   }
 
   return (
