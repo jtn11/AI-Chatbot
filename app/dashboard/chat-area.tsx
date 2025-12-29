@@ -1,4 +1,4 @@
-import { Menu, Send, Sparkles, User } from "lucide-react";
+import { Sparkles, User } from "lucide-react";
 import ChatsNotLoaded from "./chat-loading-error";
 
 type Message = {
