@@ -1,6 +1,5 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Send, Menu, User, Sparkles } from "lucide-react";
 import { getGroqChatCompletion } from "../../lib/model";
 import { SideBar } from "./sidebar";
 import { ChatArea } from "./chat-area";
@@ -45,7 +44,7 @@ export default function Dashboard() {
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }; 
 
   useEffect(() => {
     scrollToBottom();
