@@ -44,7 +44,7 @@ export default function Dashboard() {
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }; 
+  };
 
   useEffect(() => {
     scrollToBottom();
