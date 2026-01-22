@@ -1,4 +1,4 @@
-import { Send } from "lucide-react";
+import { ClipboardTypeIcon, LucideFileInput, Paperclip, Send } from "lucide-react";
 
 interface InputAreaProps {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -15,10 +15,24 @@ export const InputArea = ({
   handleSend,
   handleKeyPress,
 }: InputAreaProps) => {
+
+  const handleUpload = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/pdf";
+    input.click();
+  }
+
   return (
     <div className="border-t border-gray-200 bg-white p-4">
       <div className="max-w-3xl mx-auto">
-        <div className="flex items-end space-x-3 bg-gray-50 rounded-2xl border border-gray-200 p-2 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
+        <div className="flex justify-between space-x-3 bg-gray-50 rounded-2xl border border-gray-200 p-2 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
+          <div
+           className="ml-2 flex items-center">
+          <Paperclip className="w-5 h-5 text-purple-600"
+          onClick={handleUpload}
+          />
+          </div>
           <textarea
             ref={inputRef}
             value={inputValue}
@@ -32,7 +46,7 @@ export const InputArea = ({
           <button
             onClick={handleSend}
             disabled={!inputValue.trim()}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md hover:shadow-lg flex-shrink-0"
+            className="bg-linear-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md hover:shadow-lg flex-shrink-0"
           >
             <Send className="h-5 w-5" />
           </button>

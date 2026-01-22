@@ -25,7 +25,7 @@ export default function ChatsNotLoaded() {
 
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-8">
             <div className="flex items-start space-x-3">
-              <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <AlertCircle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
               <div className="text-left">
                 <p className="text-sm font-medium text-red-900 mb-1">
                   Error Details
@@ -41,7 +41,7 @@ export default function ChatsNotLoaded() {
           <div className="space-y-3">
             <button
               onClick={handleRetry}
-              className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl font-medium flex items-center justify-center space-x-2"
+              className="w-full px-6 py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl font-medium flex items-center justify-center space-x-2"
             >
               <RefreshCw className="h-5 w-5" />
               <span>Retry Loading</span>

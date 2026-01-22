@@ -38,7 +38,7 @@ export const ChatArea = ({
         // Empty State
         <div className="h-full flex items-center justify-center p-8">
           <div className="text-center max-w-2xl">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-blue-500 to-purple-600 rounded-2xl mb-6">
               <Sparkles className="h-8 w-8 text-white" />
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -94,9 +94,9 @@ export const ChatArea = ({
                 className={`flex items-start space-x-3 max-w-[80%] ${message.sender === "user" ? "flex-row-reverse space-x-reverse" : ""}`}
               >
                 <div
-                  className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                  className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                     message.sender === "bot"
-                      ? "bg-gradient-to-br from-blue-500 to-purple-600"
+                      ? "bg-linear-to-br from-blue-500 to-purple-600"
                       : "bg-gray-700"
                   }`}
                 >
@@ -124,7 +124,7 @@ export const ChatArea = ({
           {isTyping && (
             <div className="flex justify-start">
               <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                <div className="shrink-0 w-8 h-8 rounded-full bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                   <Sparkles className="h-5 w-5 text-white" />
                 </div>
                 <div className="bg-white border text-black border-gray-200 px-4 py-3 rounded-2xl">
