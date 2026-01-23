@@ -1,4 +1,9 @@
-import { ClipboardTypeIcon, LucideFileInput, Paperclip, Send } from "lucide-react";
+import {
+  ClipboardTypeIcon,
+  LucideFileInput,
+  Paperclip,
+  Send,
+} from "lucide-react";
 
 interface InputAreaProps {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -15,23 +20,43 @@ export const InputArea = ({
   handleSend,
   handleKeyPress,
 }: InputAreaProps) => {
-
-  const handleUpload = () => {
+  const handleUpload = async () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "application/pdf";
+
+    input.onchange = async () => {
+      if (!input.files || input.files.length === 0) return;
+      const file = input.files[0];
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const uploadRes = await fetch("/api/uploads", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await uploadRes.json();
+        console.log("Upload Response:", data);
+      } catch (err) {
+        console.error("Upload failed:", err);
+      }
+    };
+
     input.click();
-  }
+  };
 
   return (
     <div className="border-t border-gray-200 bg-white p-4">
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between space-x-3 bg-gray-50 rounded-2xl border border-gray-200 p-2 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
-          <div
-           className="ml-2 flex items-center">
-          <Paperclip className="w-5 h-5 text-purple-600"
-          onClick={handleUpload}
-          />
+          <div className="ml-2 flex items-center">
+            <Paperclip
+              className="w-5 h-5 text-purple-600"
+              onClick={handleUpload}
+            />
           </div>
           <textarea
             ref={inputRef}
