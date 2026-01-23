@@ -19,11 +19,11 @@ export async function POST(req: NextRequest) {
   const filePath = path.join(uploadDir, file.name);
   fs.writeFileSync(filePath, buffer);
 
-  // await fetch("http://localhost:3000/ingest" , {
-  //     method : "POST" ,
-  //     headers : {"Content-Type" :  "application/json"} ,
-  //     body : JSON.stringify({filePath})
-  // })
+  await fetch("http://localhost:3000/ingest" , {
+      method : "POST" ,
+      headers : {"Content-Type" :  "application/json"} ,
+      body : JSON.stringify({filePath})
+  })
 
   return NextResponse.json({ sucess: true });
 }

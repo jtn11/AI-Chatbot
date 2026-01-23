@@ -121,31 +121,23 @@ def main():
     print("\n✅ Ingestion complete! Your documents are now ready for RAG queries.")
     return vectorstore
 
+def run_ingestion():
+    print("=== RAG Ingestion Pipeline ===")
+
+    docs_path = "docs"
+    persist_directory = "db/chroma_db"
+
+    if os.path.exists(persist_directory):
+        print("Vector store already exists. Skipping ingestion.")
+        return
+
+    documents = load_documents(docs_path)
+    chunks = split_documents(documents)
+    create_vector_store(chunks, persist_directory)
+
+    print("✅ Ingestion complete")
+
+
+# CLI support (optional but correct)
 if __name__ == "__main__":
-    main()
-
-
-
-
-# documents = [
-#    Document(
-#        page_content="Google LLC is an American multinational corporation and technology company focusing on online advertising, search engine technology, cloud computing, computer software, quantum computing, e-commerce, consumer electronics, and artificial intelligence (AI).",
-#        metadata={'source': 'docs/google.txt'}
-#    ),
-#    Document(
-#        page_content="Microsoft Corporation is an American multinational corporation and technology conglomerate headquartered in Redmond, Washington.",
-#        metadata={'source': 'docs/microsoft.txt'}
-#    ),
-#    Document(
-#        page_content="Nvidia Corporation is an American technology company headquartered in Santa Clara, California.",
-#        metadata={'source': 'docs/nvidia.txt'}
-#    ),
-#    Document(
-#        page_content="Space Exploration Technologies Corp., commonly referred to as SpaceX, is an American space technology company headquartered at the Starbase development site in Starbase, Texas.",
-#        metadata={'source': 'docs/spacex.txt'}
-#    ),
-#    Document(
-#        page_content="Tesla, Inc. is an American multinational automotive and clean energy company headquartered in Austin, Texas.",
-#        metadata={'source': 'docs/tesla.txt'}
-#    )
-# ]
+    run_ingestion()
