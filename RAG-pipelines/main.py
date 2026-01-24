@@ -12,3 +12,4 @@ class IngestRequest(BaseModel):
 def ingest(req: IngestRequest):
     run_ingestion(req.filePath)
     return {"status": "ingestion completed"}
+
