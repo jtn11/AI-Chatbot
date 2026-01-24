@@ -45,3 +45,5 @@ firebase.ts
 #RAG 
 plan.txt
 db
+__pycache__
+uploads/

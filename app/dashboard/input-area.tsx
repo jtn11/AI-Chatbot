@@ -1,9 +1,4 @@
-import {
-  ClipboardTypeIcon,
-  LucideFileInput,
-  Paperclip,
-  Send,
-} from "lucide-react";
+import { Paperclip, Send } from "lucide-react";
 
 interface InputAreaProps {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;

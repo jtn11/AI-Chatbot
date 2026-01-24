@@ -1,11 +1,37 @@
 import os
+import re
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_chroma import Chroma
 from dotenv import load_dotenv
 from langchain_community.embeddings import HuggingFaceEmbeddings
+from pypdf import PdfReader
+
 
 load_dotenv()
+
+def extract_text_from_pdf(pdf_path: str) -> str:
+    reader = PdfReader(pdf_path)
+    text = ""
+    for page in reader.pages:
+        text += (page.extract_text() or "") + "\n"
+    return text
+
+
+def save_text_to_docs(text: str, filename: str):
+    os.makedirs("docs", exist_ok=True)
+    with open(f"docs/{filename}.txt", "w", encoding="utf-8") as f:
+        f.write(text)
+
+def normalize_extracted_text(text: str) -> str:
+    text = re.sub(r'(?<=\w)\s(?=\w)', '', text)
+
+    # Normalize excessive whitespace
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    text = re.sub(r'[ \t]{2,}', ' ', text)
+
+    return text.strip()
+
 
 def load_documents(docs_path="docs"):
     """Load all text files from the docs directory"""
@@ -121,8 +147,16 @@ def main():
     print("\n✅ Ingestion complete! Your documents are now ready for RAG queries.")
     return vectorstore
 
-def run_ingestion():
+def run_ingestion(file_path):
     print("=== RAG Ingestion Pipeline ===")
+
+    print(f"Extracting text from: {file_path}")
+
+    text = extract_text_from_pdf(file_path)
+    clean_text = normalize_extracted_text(text)
+
+    base_name = os.path.basename(file_path).replace(".pdf", "")
+    save_text_to_docs(clean_text, base_name)
 
     docs_path = "docs"
     persist_directory = "db/chroma_db"
