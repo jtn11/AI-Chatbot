@@ -1,6 +1,6 @@
 import os
 from langchain_chroma import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CHROMA_DIR = os.path.join(BASE_DIR, "db", "chroma_db")
@@ -13,9 +13,13 @@ db = Chroma(
     persist_directory=CHROMA_DIR,
     embedding_function=embedding_model
 )
+print("[RAG] Vector DB count:", db._collection.count())
+
 
 def retrieve_chunks(query: str, k: int = 5):
     """
     Retrieve top-k relevant document chunks for a query.
     """
-    return db.similarity_search(query, k=k)
+    docs = db.similarity_search(query, k=k)
+    print(f"[RAG] Retrieved {len(docs)} chunks for query: {query}")
+    return docs

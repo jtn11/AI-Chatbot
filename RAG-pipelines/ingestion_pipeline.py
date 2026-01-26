@@ -4,11 +4,14 @@ from langchain_community.document_loaders import TextLoader, DirectoryLoader
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_chroma import Chroma
 from dotenv import load_dotenv
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from pypdf import PdfReader
 
 
 load_dotenv()
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 def extract_text_from_pdf(pdf_path: str) -> str:
     reader = PdfReader(pdf_path)
@@ -17,11 +20,15 @@ def extract_text_from_pdf(pdf_path: str) -> str:
         text += (page.extract_text() or "") + "\n"
     return text
 
-
 def save_text_to_docs(text: str, filename: str):
-    os.makedirs("docs", exist_ok=True)
-    with open(f"docs/{filename}.txt", "w", encoding="utf-8") as f:
+    docs_dir = os.path.join(BASE_DIR, "docs")
+    os.makedirs(docs_dir, exist_ok=True)
+
+    file_path = os.path.join(docs_dir, f"{filename}.txt")
+    with open(file_path, "w", encoding="utf-8") as f:
         f.write(text)
+
+    print(f"Saved extracted text to: {file_path}")
 
 def normalize_extracted_text(text: str) -> str:
     text = re.sub(r'(?<=\w)\s(?=\w)', '', text)
@@ -89,7 +96,7 @@ def split_documents(documents, chunk_size=1000, chunk_overlap=0):
     
     return chunks
 
-def create_vector_store(chunks, persist_directory="db/chroma_db"):
+def create_vector_store(chunks, persist_directory):
     """Create and persist ChromaDB vector store"""
     print("Creating embeddings and storing in ChromaDB...")
         
@@ -121,12 +128,9 @@ def run_ingestion(file_path):
     base_name = os.path.basename(file_path).replace(".pdf", "")
     save_text_to_docs(clean_text, base_name)
 
-    docs_path = "docs"
-    persist_directory = "db/chroma_db"
+    docs_path = os.path.join(BASE_DIR, "docs")
+    persist_directory = os.path.join(BASE_DIR, "db", "chroma_db")
 
-    if os.path.exists(persist_directory):
-        print("Vector store already exists. Skipping ingestion.")
-        return
 
     documents = load_documents(docs_path)
     chunks = split_documents(documents)
