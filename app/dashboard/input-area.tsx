@@ -1,4 +1,5 @@
 import { Paperclip, Send } from "lucide-react";
+import React from "react";
 
 interface InputAreaProps {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -6,6 +7,7 @@ interface InputAreaProps {
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   handleSend: () => Promise<void>;
   handleKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  setIsRagActive : React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const InputArea = ({
@@ -14,7 +16,9 @@ export const InputArea = ({
   setInputValue,
   handleSend,
   handleKeyPress,
+  setIsRagActive
 }: InputAreaProps) => {
+
   const handleUpload = async () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -34,6 +38,7 @@ export const InputArea = ({
         });
 
         const data = await uploadRes.json();
+        setIsRagActive(true)
         console.log("Upload Response:", data);
       } catch (err) {
         console.error("Upload failed:", err);

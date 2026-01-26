@@ -1,10 +1,10 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { getGroqChatCompletion } from "../../lib/model";
 import { SideBar } from "./sidebar";
 import { ChatArea } from "./chat-area";
 import { InputArea } from "./input-area";
 import { TopBar } from "./top-bar";
+import { GenerateBotResponse } from "./generate-bot-response";
 
 interface Message {
   id: number;
@@ -33,14 +33,11 @@ export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+  const [isRagActive , setIsRagActive] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const currentChat = chats.find((chat) => chat.id === currentChatId);
-
-  // if(!currentChat){
-  //   return (<div>Chat not loaded </div>)
-  // }
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,20 +50,6 @@ export default function Dashboard() {
   useEffect(() => {
     inputRef.current?.focus();
   }, [currentChatId]);
-
-  const generateBotResponse = async (userInput: string) => {
-    const input = userInput.toLowerCase();
-
-    try {
-      const completions = await getGroqChatCompletion(input);
-      const botmessage =
-        completions.choices[0]?.message?.content || "No response";
-      return botmessage;
-    } catch (error) {
-      console.log("Groq API Error", error);
-      return "No response";
-    }
-  };
 
   const handleSend = async (): Promise<void> => {
     if (!inputValue.trim() || !currentChat) return;
@@ -100,7 +83,7 @@ export default function Dashboard() {
 
     // Simulate bot response
 
-    const botRespone = await generateBotResponse(userMessage.text);
+    const botRespone = await GenerateBotResponse(userMessage.text , isRagActive);
     const botMessage: Message = {
       id: Date.now(),
       text: botRespone,
@@ -159,6 +142,7 @@ export default function Dashboard() {
           setInputValue={setInputValue}
           handleSend={handleSend}
           handleKeyPress={handleKeyPress}
+          setIsRagActive={setIsRagActive}
         />
       </div>
     </div>
