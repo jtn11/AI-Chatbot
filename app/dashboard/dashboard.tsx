@@ -33,7 +33,8 @@ export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-  const [isRagActive , setIsRagActive] = useState<boolean>(false);
+  const [isRagActive, setIsRagActive] = useState<boolean>(false);
+  const [pdfUploaded, setPdfUploaded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -83,7 +84,11 @@ export default function Dashboard() {
 
     // Simulate bot response
 
-    const botRespone = await GenerateBotResponse(userMessage.text , isRagActive);
+    const botRespone = await GenerateBotResponse(
+      userMessage.text,
+      isRagActive,
+      pdfUploaded,
+    );
     const botMessage: Message = {
       id: Date.now(),
       text: botRespone,
@@ -143,6 +148,8 @@ export default function Dashboard() {
           handleSend={handleSend}
           handleKeyPress={handleKeyPress}
           setIsRagActive={setIsRagActive}
+          setPdfUploaded={setPdfUploaded}
+          pdfUploaded={pdfUploaded}
         />
       </div>
     </div>

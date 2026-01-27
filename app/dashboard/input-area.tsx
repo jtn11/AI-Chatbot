@@ -1,5 +1,6 @@
-import { Paperclip, Send } from "lucide-react";
-import React from "react";
+import { FileText, LoaderCircle, Paperclip, Send, X } from "lucide-react";
+import React, { useState } from "react";
+import { uploadPdf } from "./upload-doc-function";
 
 interface InputAreaProps {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -7,7 +8,9 @@ interface InputAreaProps {
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   handleSend: () => Promise<void>;
   handleKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-  setIsRagActive : React.Dispatch<React.SetStateAction<boolean>>
+  setIsRagActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
+  pdfUploaded: boolean;
 }
 
 export const InputArea = ({
@@ -16,36 +19,31 @@ export const InputArea = ({
   setInputValue,
   handleSend,
   handleKeyPress,
-  setIsRagActive
+  setIsRagActive,
+  setPdfUploaded,
+  pdfUploaded,
 }: InputAreaProps) => {
+  const [pdfloading, setpdfloading] = useState(false);
 
   const handleUpload = async () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "application/pdf";
+    try {
+      await uploadPdf(setpdfloading); // async upload function
+      setIsRagActive(true);
+      setPdfUploaded(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setpdfloading(false);
+    }
+  };
 
-    input.onchange = async () => {
-      if (!input.files || input.files.length === 0) return;
-      const file = input.files[0];
+  const handleDelete = async () => {
+    setPdfUploaded(false);
+    setIsRagActive(false);
 
-      const formData = new FormData();
-      formData.append("file", file);
-
-      try {
-        const uploadRes = await fetch("/api/uploads", {
-          method: "POST",
-          body: formData,
-        });
-
-        const data = await uploadRes.json();
-        setIsRagActive(true)
-        console.log("Upload Response:", data);
-      } catch (err) {
-        console.error("Upload failed:", err);
-      }
-    };
-
-    input.click();
+    await fetch("http://localhost:8000/clear", {
+      method: "POST",
+    });
   };
 
   return (
@@ -53,11 +51,25 @@ export const InputArea = ({
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between space-x-3 bg-gray-50 rounded-2xl border border-gray-200 p-2 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
           <div className="ml-2 flex items-center">
-            <Paperclip
-              className="w-5 h-5 text-purple-600"
-              onClick={handleUpload}
-            />
+            {pdfloading ? (
+              // 🔵 Upload in progress
+              <LoaderCircle className="w-5 h-5 text-purple-600 animate-spin" />
+            ) : pdfUploaded ? (
+              // 🟢 PDF already uploaded → show doc + delete
+              <div className="flex items-center space-x-2 bg-linear-to-br from-blue-400 to-purple-400 text-white text-sm p-1 border border-white rounded-xl">
+                <FileText className="w-4 h-4" />
+                <p>docs</p>
+                <X className="w-4 h-4 cursor-pointer" onClick={handleDelete} />
+              </div>
+            ) : (
+              // ⚪ No PDF yet → show upload icon
+              <Paperclip
+                className="w-5 h-5 text-purple-600 cursor-pointer"
+                onClick={handleUpload}
+              />
+            )}
           </div>
+
           <textarea
             ref={inputRef}
             value={inputValue}
@@ -71,7 +83,7 @@ export const InputArea = ({
           <button
             onClick={handleSend}
             disabled={!inputValue.trim()}
-            className="bg-linear-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md hover:shadow-lg flex-shrink-0"
+            className="bg-linear-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md hover:shadow-lg shrink-0"
           >
             <Send className="h-5 w-5" />
           </button>

@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
+import shutil
+import os
 
 
 from ingestion_pipeline import run_ingestion
@@ -59,6 +61,16 @@ def chat(req: QueryRequest):
         "query": req.query,
         "answer": answer
     }
+
+@app.post("/clear")
+def clear_vectors():
+    persist_directory = "db/chroma_db"
+
+    if os.path.exists(persist_directory):
+        shutil.rmtree(persist_directory)
+
+    return {"status": "cleared"}
+
 
 @app.post("/_debug")
 def debug(req: QueryRequest):
