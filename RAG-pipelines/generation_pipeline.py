@@ -17,7 +17,9 @@ def build_rag_prompt(query: str, chunks: list[str]) -> str:
     context = "\n\n".join(chunks[:3])
 
     return f"""
-You are an AI assistant answering questions based only on the provided document context.
+You are an AI assistant answering questions based on the provided document context 
+if the question is not related to document act as a normal conversation assistant
+.
 
 Instructions:
 - The context may be unstructured (e.g., extracted from a PDF).

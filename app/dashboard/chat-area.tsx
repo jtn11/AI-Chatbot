@@ -97,7 +97,7 @@ export const ChatArea = ({
                   className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                     message.sender === "bot"
                       ? "bg-linear-to-br from-blue-500 to-purple-600"
-                      : "bg-gray-700"
+                      : "bg-gray-600"
                   }`}
                 >
                   {message.sender === "bot" ? (
@@ -110,7 +110,7 @@ export const ChatArea = ({
                   className={`px-4 py-3 rounded-2xl ${
                     message.sender === "bot"
                       ? "bg-white border text-black border-gray-200"
-                      : "bg-gray-900 text-white"
+                      : "bg-gray-600 text-white"
                   }`}
                 >
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">
