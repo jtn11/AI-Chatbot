@@ -30,11 +30,11 @@ export const SideBar = ({
     setCurrentChatId(newChat.id);
   };
 
-  // const deleteChat = (chatId: number) => {
-  //   if (chatId != chats[0].id) {
-  //     setchats((prev) => prev.filter((chat) => chat.id !== chatId));
-  //   }
-  // };
+  const deleteChat = (chatId: string) => {
+    if (chatId != chats[0].id) {
+      setchats((prev) => prev.filter((chat) => chat.id !== chatId));
+    }
+  };
 
   return (
     <div
@@ -78,7 +78,7 @@ export const SideBar = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                // deleteChat(chat.id);
+                deleteChat(chat.id);
               }}
               className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-700 rounded transition-opacity"
             >
