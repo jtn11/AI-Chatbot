@@ -1,19 +1,6 @@
 import { Sparkles, User } from "lucide-react";
 import ChatsNotLoaded from "./chat-loading-error";
-
-type Message = {
-  id: number;
-  text: string;
-  sender: "user" | "bot";
-  timestamp: Date;
-};
-
-type Chat = {
-  id: number;
-  title: string;
-  messages: Message[];
-  createdAt: Date;
-};
+import { Chat } from "../types/chat-type";
 
 interface chatAreaProps {
   currentChat: Chat | undefined;

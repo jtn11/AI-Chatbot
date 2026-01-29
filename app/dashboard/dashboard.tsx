@@ -5,31 +5,11 @@ import { ChatArea } from "./chat-area";
 import { InputArea } from "./input-area";
 import { TopBar } from "./top-bar";
 import { GenerateBotResponse } from "./generate-bot-response";
-
-interface Message {
-  id: number;
-  text: string;
-  sender: "user" | "bot";
-  timestamp: Date;
-}
-
-interface Chat {
-  id: number;
-  title: string;
-  messages: Message[];
-  createdAt: Date;
-}
+import { Chat, Message } from "../types/chat-type";
 
 export default function Dashboard() {
-  const [chats, setChats] = useState<Chat[]>([
-    {
-      id: 1,
-      title: "New Chat",
-      messages: [],
-      createdAt: new Date(),
-    },
-  ]);
-  const [currentChatId, setCurrentChatId] = useState<number | null>(1);
+  const [chats, setChats] = useState<Chat[]>([]);
+  const [currentChatId, setCurrentChatId] = useState<string>("");
   const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
@@ -124,6 +104,9 @@ export default function Dashboard() {
           setchats={setChats}
           currentChatId={currentChatId}
           setCurrentChatId={setCurrentChatId}
+          setIsRagActive={setIsRagActive}
+          setPdfUploaded={setPdfUploaded}
+          pdfUploaded={pdfUploaded}
         />
       )}
 
@@ -147,9 +130,6 @@ export default function Dashboard() {
           setInputValue={setInputValue}
           handleSend={handleSend}
           handleKeyPress={handleKeyPress}
-          setIsRagActive={setIsRagActive}
-          setPdfUploaded={setPdfUploaded}
-          pdfUploaded={pdfUploaded}
         />
       </div>
     </div>

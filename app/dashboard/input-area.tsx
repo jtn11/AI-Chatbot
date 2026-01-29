@@ -1,6 +1,5 @@
-import { FileText, LoaderCircle, Paperclip, Send, X } from "lucide-react";
-import React, { useState } from "react";
-import { uploadPdf } from "./upload-doc-function";
+import { Send } from "lucide-react";
+import React from "react";
 
 interface InputAreaProps {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -8,9 +7,6 @@ interface InputAreaProps {
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   handleSend: () => Promise<void>;
   handleKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-  setIsRagActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
-  pdfUploaded: boolean;
 }
 
 export const InputArea = ({
@@ -19,57 +15,11 @@ export const InputArea = ({
   setInputValue,
   handleSend,
   handleKeyPress,
-  setIsRagActive,
-  setPdfUploaded,
-  pdfUploaded,
 }: InputAreaProps) => {
-  const [pdfloading, setpdfloading] = useState(false);
-
-  const handleUpload = async () => {
-    try {
-      await uploadPdf(setpdfloading); // async upload function
-      setIsRagActive(true);
-      setPdfUploaded(true);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setpdfloading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    setPdfUploaded(false);
-    setIsRagActive(false);
-
-    await fetch("http://localhost:8000/clear", {
-      method: "POST",
-    });
-  };
-
   return (
     <div className="border-t border-gray-200 bg-white p-4">
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between space-x-3 bg-gray-50 rounded-2xl border border-gray-200 p-2 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
-          <div className="ml-2 flex items-center">
-            {pdfloading ? (
-              // 🔵 Upload in progress
-              <LoaderCircle className="w-5 h-5 text-purple-600 animate-spin" />
-            ) : pdfUploaded ? (
-              // 🟢 PDF already uploaded → show doc + delete
-              <div className="flex items-center space-x-2 bg-linear-to-br from-blue-400 to-purple-400 text-white text-sm p-1 border border-white rounded-xl">
-                <FileText className="w-4 h-4" />
-                <p>docs</p>
-                <X className="w-4 h-4 cursor-pointer" onClick={handleDelete} />
-              </div>
-            ) : (
-              // ⚪ No PDF yet → show upload icon
-              <Paperclip
-                className="w-5 h-5 text-purple-600 cursor-pointer"
-                onClick={handleUpload}
-              />
-            )}
-          </div>
-
           <textarea
             ref={inputRef}
             value={inputValue}

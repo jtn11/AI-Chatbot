@@ -1,26 +1,17 @@
 "use client";
 import { MessageSquare, Plus, Trash2, User } from "lucide-react";
-
-interface Chat {
-  id: number;
-  title: string;
-  messages: Message[];
-  createdAt: Date;
-}
-
-interface Message {
-  id: number;
-  text: string;
-  sender: "user" | "bot";
-  timestamp: Date;
-}
+import { createChat, Chat } from "../types/chat-type";
+import { UploadDocument } from "./upload-doc-component";
 
 interface SideBarProps {
   sidebarOpen: boolean;
   chats: Chat[];
   setchats: (value: Chat[] | ((prev: Chat[]) => Chat[])) => void;
-  currentChatId: number | null;
-  setCurrentChatId: (id: number | null) => void;
+  currentChatId: string;
+  setCurrentChatId: (id: string) => void;
+  setIsRagActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
+  pdfUploaded: boolean;
 }
 
 export const SideBar = ({
@@ -29,36 +20,41 @@ export const SideBar = ({
   setchats,
   currentChatId,
   setCurrentChatId,
+  setIsRagActive,
+  setPdfUploaded,
+  pdfUploaded,
 }: SideBarProps) => {
   const createNewChat = () => {
-    const newChat: Chat = {
-      id: Date.now(),
-      title: "New Chat",
-      messages: [],
-      createdAt: new Date(),
-    };
+    const newChat = createChat("New Chat");
     setchats((prev) => [newChat, ...prev]);
     setCurrentChatId(newChat.id);
   };
 
-  const deleteChat = (chatId: number) => {
-    if (chatId != chats[0].id) {
-      setchats((prev) => prev.filter((chat) => chat.id !== chatId));
-    }
-  };
+  // const deleteChat = (chatId: number) => {
+  //   if (chatId != chats[0].id) {
+  //     setchats((prev) => prev.filter((chat) => chat.id !== chatId));
+  //   }
+  // };
 
   return (
     <div
-      className={`${sidebarOpen ? "w-64" : "w-0"} fixed md:sticky left-0 top-0 h-screen bg-gray-900 text-white transition-all duration-300 z-40 flex flex-col overflow-hidden`}
+      className={`${sidebarOpen ? "w-64" : "w-0"} fixed md:sticky left-0 top-0 bottom-0 bg-gray-900 text-white transition-all duration-300 z-40 flex flex-col overflow-hidden`}
     >
+      <UploadDocument
+        setIsRagActive={setIsRagActive}
+        setPdfUploaded={setPdfUploaded}
+        pdfUploaded={pdfUploaded}
+      />
+
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-gray-700">
+      <div className="pt-3 pl-3 pr-3 flex text-gray-300 items-center justify-between">
+        <span className="text-sm truncate">Your Chats</span>
         <button
           onClick={createNewChat}
-          className="w-full flex items-center justify-center space-x-2 bg-gray-800 hover:bg-gray-700 px-4 py-3 rounded-lg transition-colors"
+          className="flex items-center justify-center space-x-2 bg-gray-800 hover:bg-gray-700 p-2 rounded-lg transition-colors"
         >
-          <Plus className="h-5 w-5" />
-          <span className="font-medium">New Chat</span>
+          <Plus className="h-3 w-3" />
+          <span className="text-sm truncate">New Chat</span>
         </button>
       </div>
 
@@ -82,7 +78,7 @@ export const SideBar = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                deleteChat(chat.id);
+                // deleteChat(chat.id);
               }}
               className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-700 rounded transition-opacity"
             >
