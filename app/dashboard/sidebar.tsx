@@ -82,7 +82,7 @@ export const SideBar = ({
               }}
               className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-700 rounded transition-opacity"
             >
-              <Trash2 className="h-4 w-4 text-gray-400" />
+              <Trash2 className="h-4 w-4 text-red-400" />
             </button>
           </div>
         ))}
