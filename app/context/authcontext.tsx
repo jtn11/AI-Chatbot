@@ -1,13 +1,11 @@
 "use client";
 import { app } from "@/firebase/firebase";
 import {
-  createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, getFirestore, serverTimestamp, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useContext, useState, createContext, useEffect } from "react";
 
@@ -20,7 +18,6 @@ interface AuthContextType {
 }
 
 const auth = getAuth(app);
-const firebasedb = getFirestore();
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -36,20 +33,21 @@ export const AuthContextProvider = ({
 
   const signup = async (email: string, password: string, username: string) => {
     try {
-      const signedInuser = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-      const user = signedInuser.user;
-      console.log(user);
-
-      await setDoc(doc(firebasedb, "users", user.uid), {
-        username,
-        email,
-        uid: user.uid,
-        createdAt: serverTimestamp(),
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, username }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Signup failed");
+      }
+
+      // Sign in the user on the client side after successful creation
+      await signInWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
     } catch (error) {
       console.log("Error", error);
