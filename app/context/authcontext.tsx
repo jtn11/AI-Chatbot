@@ -1,6 +1,7 @@
 "use client";
 import { app } from "@/firebase/firebase";
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -32,7 +33,15 @@ export const AuthContextProvider = ({
   const router = useRouter();
 
   const signup = async (email: string, password: string, username: string) => {
+
     try {
+      const userCred = createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      ) ; 
+      // const user = userCred.user
+
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
@@ -47,7 +56,7 @@ export const AuthContextProvider = ({
       }
 
       // Sign in the user on the client side after successful creation
-      await signInWithEmailAndPassword(auth, email, password);
+      
       router.push("/dashboard");
     } catch (error) {
       console.log("Error", error);

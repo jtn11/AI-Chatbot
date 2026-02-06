@@ -1,0 +1,28 @@
+JATIN SAINI
+ 
+SkillsProgramming Languages : JavaScript , TypeScript , JavaFrontend Developement : React . js , Next . js , HTML , CSS , Browser APIs ( MediaRecorder , Extensions )
+Back - End & APIs : Node . js , Express . js , REST APIs , Firebase ( Auth , Firestore )
+AI & Intelligent Systems ( Working Knowledge ) :
+LLM APIs , Prompt Engineering , Retrieval - Augmented Generation ( RAG ) , Embeddings , Agentic WorkflowsTools & Platforms : Git , GitHub , Postman , VercelPROFILEShttps : / / github . com / jtn11https : / / leetcode . com / u / jatinsainii007 /
+https : / / www . linkedin . com / in / jatin - saini - 214795257 /
+Portfolio : https : / / portfolio - drab - eta - 91 . vercel . app /
+PROJECTS
+ CertificationsBuilt an AI - powered resume analysis platform that evaluates resumes against job descriptions togenerate structured insights such as match scores , missing skills , keyword gaps , and improvementsuggestions .
+ Designed and implemented a full - stack system using Next . js , Node . js , Firebase ( Firestore ) , and anLLM API , supporting features like analysis history , responsive UI updates , and reliable structuredJSON responses through prompt - driven workflows .
+A Retrieval - Augmented Generation ( RAG ) chatbot designed to deliver context - aware responsesover private datasets .
+Configured and deployed a localLlama3 . 1 : 8B model using Ollama for low - latency inference withoutrelying on external APIs .
+Configured Flowise nodes for embeddings , vector search , and context - aware Llama responses .
+Explored modern LLM concepts including embeddings , prompt engineering , and the overallarchitecture of RAG pipelines .
+ 
+Project TaskNest , a collaborative task management platform using Next . js , React . js , TypeScript , andFirebase with real - time updates and secure authentication . 
+Implemented task assignment , workspace collaboration , and integrated a Node . js + Express backendwith Firestore for scalable and efficient data handling .
+GithubTasknest - Task tracking platform GithubTailorAI – Resume Analysis Platform GithubAddress: Ghaziabad,UTTARPRADESH Phonenumber : 9650329139 
+Email : jatinsainii2003@gmail.comNov2025Oct2025Sept2025Sept2025Built a React . js + TypeScript speech translation app using MediaRecorder to capture audio and GroqʼsWhisper API to translate Hindi speech to English text . 
+Implemented async API handling with FormData uploads , error handling for API failures andmicrophone access , and state management for recording , loading , and translation states .
+Programming Fundamentals using Python ( Infosys SpringBoard )
+AWS Academy Cloud Foundations
+ EDUCATION
+ B . Tech | CS ( 2022 - 2026 ) 
+KIET Group of Institutions , Dr . A . P . J . Abdul Kalam Technical University .
+CGPA - 7 . 2Ghaziabad , Uttar Pradesh 
+RAG - Powered AI Chatbot GithubAI - Powered Speech Translator .
