@@ -1,0 +1,21 @@
+import { getAdminAuth } from "@/firebase/firebase-admin";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(req: NextRequest) {
+  try {
+    const { idToken } = await req.json();
+    const adminAuth = getAdminAuth();
+    const decodedToken = await adminAuth.verifyIdToken(idToken);
+
+    const response = NextResponse.json({ success: true });
+    response.cookies.set("session", idToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 60 * 60 * 24 * 5,
+    });
+
+    return response;
+  } catch (error) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+}

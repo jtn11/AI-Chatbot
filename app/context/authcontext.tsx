@@ -33,14 +33,13 @@ export const AuthContextProvider = ({
   const router = useRouter();
 
   const signup = async (email: string, password: string, username: string) => {
-
     try {
-      const userCred = createUserWithEmailAndPassword(
+      const userCred = await createUserWithEmailAndPassword(
         auth,
         email,
         password,
-      ) ; 
-      // const user = userCred.user
+      );
+      const user = userCred.user;
 
       const response = await fetch("/api/auth/signup", {
         method: "POST",
@@ -56,19 +55,30 @@ export const AuthContextProvider = ({
       }
 
       // Sign in the user on the client side after successful creation
-      
+
       router.push("/dashboard");
     } catch (error) {
       console.log("Error", error);
     }
   };
+
   const logout = async () => {
     await signOut(auth);
     router.push("/auth/signin");
   };
 
+  const createSession = async (user: any) => {
+    const idToken = await user.getIdToken();
+    await fetch("api/auth/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
+    });
+  };
+
   const login = async (email: string, password: string) => {
     const userCred = await signInWithEmailAndPassword(auth, email, password);
+    await createSession(userCred.user);
     const user = userCred.user;
     console.log(user);
     router.push("/dashboard");

@@ -5,12 +5,12 @@ import { ChatArea } from "./chat-area";
 import { InputArea } from "./input-area";
 import { TopBar } from "./top-bar";
 import { GenerateBotResponse } from "./generate-bot-response";
-import { Chat, Message , createChat } from "../types/chat-type";
+import { Chat, Message, createChat } from "../types/chat-type";
 
 const initialChat = createChat("New Chat");
 
 export default function Dashboard() {
-  const [chats, setChats] = useState<Chat[]>([initialChat])
+  const [chats, setChats] = useState<Chat[]>([initialChat]);
   const [currentChatId, setCurrentChatId] = useState<string>(initialChat.id);
   const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
