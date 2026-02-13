@@ -47,3 +47,4 @@ plan.txt
 db
 __pycache__
 uploads/
+serviceAccountkey.json
