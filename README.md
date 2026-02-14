@@ -8,11 +8,13 @@ The application supports **secure authentication**, **document-based question an
 ## 🚀 Features
 
 ### 💬 AI Chatbot
+
 - Context-aware chatbot powered by **RAG (Retrieval-Augmented Generation)**
 - Answers user queries based on uploaded documents (PDF / TXT)
 - Reduces hallucinations by grounding responses in real data
 
 ### 📂 Document Upload & Knowledge Base
+
 - Upload documents (PDF / TXT)
 - Automatic document ingestion:
   - Chunking
@@ -21,6 +23,7 @@ The application supports **secure authentication**, **document-based question an
 - Persistent vector database (no reprocessing on restart)
 
 ### 🔐 Secure Authentication
+
 - Firebase Authentication
 - Sign up, Sign in, Sign out
 - Protected routes with redirects for unauthenticated users
@@ -28,6 +31,7 @@ The application supports **secure authentication**, **document-based question an
 - Server-side session validation via API routes
 
 ### 🧱 Modern Architecture
+
 - Next.js 14 App Router
 - React Server Components + Client Components
 - Clean separation of frontend, API, and AI pipelines
@@ -51,22 +55,26 @@ Retriever
 LLM
 ↓
 Final Answer
+
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - Next.js 14 (App Router)
 - React
 - TypeScript / JavaScript
 - Tailwind CSS / CSS Modules
 
 ### Backend & AI
+
 - LangChain
 - OpenAI Embeddings (`text-embedding-3-small`)
 - ChromaDB (Vector Store)
 
 ### Authentication
+
 - Firebase Authentication
 - Custom Auth Context
 
@@ -77,6 +85,7 @@ Final Answer
 Create a `.env.local` file in the root directory.
 
 ### 🔥 Firebase Configuration
+
 Get these values from **Firebase Console → Project Settings**.
 
 ```env
@@ -115,3 +124,4 @@ Relevant document chunks are retrieved
 Context is injected into the LLM prompt
 
 Final answer is generated
+```

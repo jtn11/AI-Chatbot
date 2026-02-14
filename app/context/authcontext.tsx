@@ -40,13 +40,14 @@ export const AuthContextProvider = ({
         password,
       );
       const user = userCred.user;
+      const idToken = await user.getIdToken();
 
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, username }),
+        body: JSON.stringify({ idToken, username }),
       });
 
       if (!response.ok) {
