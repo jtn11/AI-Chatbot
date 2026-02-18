@@ -1,8 +1,7 @@
 import { getAdminDb } from "@/firebase/firebase-admin";
-import {serverTimestamp } from "firebase/database";
+import { serverTimestamp } from "firebase/database";
 
-
-const db = getAdminDb() ; 
+const db = getAdminDb();
 export async function createChat(userId: string) {
   const chatRef = await db
     .collection("users")
@@ -23,7 +22,7 @@ export async function saveMessage(
   userId: string,
   chatId: string,
   text: string,
-  sender: "user" | "bot"
+  sender: "user" | "bot",
 ) {
   await db
     .collection("users")

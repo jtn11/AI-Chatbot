@@ -1,5 +1,3 @@
-import { getGroqChatCompletion } from "@/lib/model";
-
 export async function GenerateBotResponse(
   userInput: string,
   isRagActive: boolean,
@@ -7,22 +5,19 @@ export async function GenerateBotResponse(
 ) {
   const input = userInput.toLowerCase();
   try {
-    if (isRagActive && pdfUploaded) {
-      const res = await fetch("http://localhost:8000/chat", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ query: input }),
-      });
-      const data = await res.json();
-      return data.answer;
-    }
-    const completions = await getGroqChatCompletion(input);
-    const botmessage =
-      completions.choices[0]?.message?.content || "No response";
-
-    return botmessage;
+    const res = await fetch("http://localhost:8000/chat", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        query: input,
+        is_rag_active: isRagActive,
+        is_pdf_uploaded: pdfUploaded,
+      }),
+    });
+    const data = await res.json();
+    return data.answer;
   } catch (error) {
     console.log("Chat Error", error);
     return "Something went wrong.";

@@ -1,0 +1,14 @@
+users (collection)
+  └── {userId}
+        └── chats (subcollection)
+              └── {chatId}
+                    ├── title
+                    ├── createdAt
+                    ├── updatedAt
+                    ├── isRagActive
+                    ├── activeDocumentName
+                    └── messages (subcollection)
+                          └── {messageId}
+                                ├── text
+                                ├── sender ("user" | "bot")
+                                ├── createdAt

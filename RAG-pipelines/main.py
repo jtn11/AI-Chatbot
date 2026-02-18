@@ -9,6 +9,7 @@ import os
 from ingestion_pipeline import run_ingestion
 from retrieval_pipeline import retrieve_chunks
 from generation_pipeline import generate_answer
+from generation_pipeline import generate_llm_answer
 
 # Load environment variables once, globally
 load_dotenv()
@@ -24,7 +25,9 @@ app.add_middleware(
 )
 
 class QueryRequest(BaseModel):
-    query: str
+    query: str 
+    is_rag_active : bool
+    is_pdf_uploaded : bool
 
 class IngestRequest(BaseModel):
     filePath: str
@@ -49,6 +52,9 @@ def rag_chat(query: str) -> str:
     chunks = [doc.page_content for doc in docs]
     return generate_answer(query, chunks)
 
+def llm_chat(query : str) -> str :
+    return generate_llm_answer(query)
+
 
 @app.post("/chat")
 def chat(req: QueryRequest):
@@ -56,7 +62,10 @@ def chat(req: QueryRequest):
     Production chat endpoint.
     Returns a final, grounded answer.
     """
-    answer = rag_chat(req.query)
+    if req.is_rag_active and req.is_pdf_uploaded:
+        answer = rag_chat(req.query)
+    else:
+        answer = llm_chat(req.query )
     return {
         "query": req.query,
         "answer": answer
@@ -72,11 +81,11 @@ def clear_vectors():
     return {"status": "cleared"}
 
 
-@app.post("/_debug")
-def debug(req: QueryRequest):
-    docs = retrieve_chunks(req.query)
-    return {
-        "count": len(docs),
-        "samples": [d.page_content[:200] for d in docs]
-    }
+# @app.post("/_debug")
+# def debug(req: QueryRequest):
+#     docs = retrieve_chunks(req.query)
+#     return {
+#         "count": len(docs),
+#         "samples": [d.page_content[:200] for d in docs]
+#     }
 

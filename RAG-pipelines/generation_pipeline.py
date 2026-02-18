@@ -16,6 +16,7 @@ def build_rag_prompt(query: str, chunks: list[str]) -> str:
     # Limit context to avoid token overflow and noise
     context = "\n\n".join(chunks[:3])
 
+    # here [ act as a normal conversation assistant ] from prompt should be fixed 
     return f"""
 You are an AI assistant answering questions based on the provided document context
 analyze the document and answer the realed questions if asked about document,  
@@ -54,6 +55,29 @@ def generate_answer(query: str, chunks: list[str]) -> str:
             {"role": "user", "content": prompt}
         ],
         temperature=0.3,
+        max_tokens=512,
+    )
+
+    return response.choices[0].message.content.strip()
+
+
+def generate_llm_answer(query: str) -> str:
+    """
+    Normal conversational LLM call (no RAG).
+    """
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a helpful and intelligent AI assistant."
+            },
+            {
+                "role": "user",
+                "content": query
+            }
+        ],
+        temperature=0.7,
         max_tokens=512,
     )
 
