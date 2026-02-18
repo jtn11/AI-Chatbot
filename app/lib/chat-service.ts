@@ -18,6 +18,18 @@ export async function createChat(userId: string) {
   return chatRef.id;
 }
 
+export async function getChatById(userId: string, chatId: string) {
+  const doc = await db 
+  .collection("users")
+  .doc(userId)
+  .collection("chats")
+  .doc(chatId)
+  .get();
+
+  if(!doc.exists) return null ;
+  return doc.data();
+}
+
 export async function saveMessage(
   userId: string,
   chatId: string,

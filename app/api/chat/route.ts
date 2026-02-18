@@ -1,5 +1,5 @@
-import { saveMessage } from "@/app/lib/chat-service";
-import { createChat } from "@/app/types/chat-type";
+import { createChat, getChatById, saveMessage } from "@/app/lib/chat-service";
+import { GenerateBotResponse } from "@/app/lib/generate-bot-response";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -20,6 +20,14 @@ export async function POST(req: NextRequest) {
     }
 
     await saveMessage(userId, finalChatId, message, "user");
+
+    const chatDoc = await getChatById(userId, finalChatId);
+    const isRagActive = chatDoc?.isRagActive ?? false;
+    const pdfUploaded = chatDoc?.activeDocumentName ? true : false;
+
+    const botResponse = await GenerateBotResponse(message , isRagActive , pdfUploaded);
+    await saveMessage(userId, finalChatId, botResponse, "bot");
+
 
     return NextResponse.json({
       success: true,

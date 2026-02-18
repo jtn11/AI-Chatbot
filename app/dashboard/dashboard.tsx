@@ -4,8 +4,8 @@ import { SideBar } from "./sidebar";
 import { ChatArea } from "./chat-area";
 import { InputArea } from "./input-area";
 import { TopBar } from "./top-bar";
-import { GenerateBotResponse } from "./generate-bot-response";
 import { Chat, Message, createChat } from "../types/chat-type";
+import { useAuth } from "../context/authcontext";
 
 const initialChat = createChat("New Chat");
 
@@ -19,6 +19,9 @@ export default function Dashboard() {
   const [pdfUploaded, setPdfUploaded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const {userid} = useAuth();
+
 
   const currentChat = chats.find((chat) => chat.id === currentChatId);
 
@@ -66,25 +69,34 @@ export default function Dashboard() {
 
     // Simulate bot response
 
-    const botRespone = await GenerateBotResponse(
-      userMessage.text,
-      isRagActive,
-      pdfUploaded,
-    );
-    const botMessage: Message = {
-      id: Date.now(),
-      text: botRespone,
-      sender: "bot",
-      timestamp: new Date(),
-    };
+    const res = await fetch("/api/chat", {
+    method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    userid,
+    chatId: currentChatId,
+    message: userMessage.text,
+  }),
+});
 
-    setChats((prev) =>
-      prev.map((chat) =>
-        chat.id === currentChatId
-          ? { ...chat, messages: [...chat.messages, botMessage] }
-          : chat,
-      ),
-    );
+const data = await res.json();
+
+const botMessage: Message = {
+  id: Date.now(),
+  text: data.reply,
+  sender: "bot",
+  timestamp: new Date(),
+};
+
+setChats((prev) =>
+  prev.map((chat) =>
+    chat.id === currentChatId
+      ? { ...chat, messages: [...chat.messages, botMessage] }
+      : chat,
+  ),
+);
     setIsTyping(false);
   };
 
