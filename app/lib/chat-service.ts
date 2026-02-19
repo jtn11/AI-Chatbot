@@ -19,14 +19,14 @@ export async function createChat(userId: string) {
 }
 
 export async function getChatById(userId: string, chatId: string) {
-  const doc = await db 
-  .collection("users")
-  .doc(userId)
-  .collection("chats")
-  .doc(chatId)
-  .get();
+  const doc = await db
+    .collection("users")
+    .doc(userId)
+    .collection("chats")
+    .doc(chatId)
+    .get();
 
-  if(!doc.exists) return null ;
+  if (!doc.exists) return null;
   return doc.data();
 }
 

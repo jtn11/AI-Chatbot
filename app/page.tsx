@@ -46,13 +46,13 @@ export default function ChatbotLandingPage() {
             </div>
 
             <div className="flex items-center space-x-3">
-              <Link href="/auth/signin">
+              <Link href="/signin">
                 <button className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors">
                   Sign In
                 </button>
               </Link>
 
-              <Link href="/auth/signup">
+              <Link href="/signup">
                 <button className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg font-medium">
                   Sign Up
                 </button>
@@ -224,7 +224,7 @@ export default function ChatbotLandingPage() {
               </p>
             </div>
 
-            <div className="p-8 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl hover:shadow-xl transition-shadow">
+            <div className="p-8 bg-linear-to-br from-indigo-50 to-indigo-100 rounded-2xl hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center mb-4">
                 <Bot className="h-6 w-6 text-white" />
               </div>
@@ -264,7 +264,7 @@ export default function ChatbotLandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
+                <div className="bg-linear-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
                   <Bot className="h-5 w-5 text-white" />
                 </div>
                 <span className="text-lg font-bold">ChatAI</span>

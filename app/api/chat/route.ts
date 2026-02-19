@@ -25,9 +25,12 @@ export async function POST(req: NextRequest) {
     const isRagActive = chatDoc?.isRagActive ?? false;
     const pdfUploaded = chatDoc?.activeDocumentName ? true : false;
 
-    const botResponse = await GenerateBotResponse(message , isRagActive , pdfUploaded);
+    const botResponse = await GenerateBotResponse(
+      message,
+      isRagActive,
+      pdfUploaded,
+    );
     await saveMessage(userId, finalChatId, botResponse, "bot");
-
 
     return NextResponse.json({
       success: true,

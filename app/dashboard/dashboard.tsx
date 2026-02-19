@@ -20,8 +20,7 @@ export default function Dashboard() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const {userid} = useAuth();
-
+  const { userid } = useAuth();
 
   const currentChat = chats.find((chat) => chat.id === currentChatId);
 
@@ -70,33 +69,33 @@ export default function Dashboard() {
     // Simulate bot response
 
     const res = await fetch("/api/chat", {
-    method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    userid,
-    chatId: currentChatId,
-    message: userMessage.text,
-  }),
-});
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid,
+        chatId: currentChatId,
+        message: userMessage.text,
+      }),
+    });
 
-const data = await res.json();
+    const data = await res.json();
 
-const botMessage: Message = {
-  id: Date.now(),
-  text: data.reply,
-  sender: "bot",
-  timestamp: new Date(),
-};
+    const botMessage: Message = {
+      id: Date.now(),
+      text: data.reply,
+      sender: "bot",
+      timestamp: new Date(),
+    };
 
-setChats((prev) =>
-  prev.map((chat) =>
-    chat.id === currentChatId
-      ? { ...chat, messages: [...chat.messages, botMessage] }
-      : chat,
-  ),
-);
+    setChats((prev) =>
+      prev.map((chat) =>
+        chat.id === currentChatId
+          ? { ...chat, messages: [...chat.messages, botMessage] }
+          : chat,
+      ),
+    );
     setIsTyping(false);
   };
 

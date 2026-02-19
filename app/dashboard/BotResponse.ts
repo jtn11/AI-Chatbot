@@ -1,4 +1,1 @@
-export const BotResponse = async()=>{
-
-    
-}
+export const BotResponse = async () => {};
