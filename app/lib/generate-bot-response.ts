@@ -3,7 +3,6 @@ export async function GenerateBotResponse(
   isRagActive: boolean,
   pdfUploaded: boolean,
 ) {
-  const input = userInput.toLowerCase();
   try {
     const res = await fetch("http://localhost:8000/chat", {
       method: "POST",
@@ -11,7 +10,7 @@ export async function GenerateBotResponse(
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        query: input,
+        query: userInput,
         is_rag_active: isRagActive,
         is_pdf_uploaded: pdfUploaded,
       }),

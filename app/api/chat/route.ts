@@ -4,9 +4,15 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId, chatId, message } = await req.json();
+    const { userid, chatId, message } = await req.json();
 
-    if (!userId || !message) {
+    console.log({
+      userid,
+      chatId,
+      message,
+    });
+
+    if (!userid || !message) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -16,31 +22,35 @@ export async function POST(req: NextRequest) {
     let finalChatId = chatId;
 
     if (!finalChatId) {
-      finalChatId = await createChat(userId);
+      finalChatId = await createChat(userid);
     }
 
-    await saveMessage(userId, finalChatId, message, "user");
+    await saveMessage(userid, finalChatId, message, "user");
 
-    const chatDoc = await getChatById(userId, finalChatId);
+    const chatDoc = await getChatById(userid, finalChatId);
     const isRagActive = chatDoc?.isRagActive ?? false;
     const pdfUploaded = chatDoc?.activeDocumentName ? true : false;
 
-    const botResponse = await GenerateBotResponse(
-      message,
-      isRagActive,
-      pdfUploaded,
-    );
-    await saveMessage(userId, finalChatId, botResponse, "bot");
+    let botResponse;
+    try {
+      botResponse = await GenerateBotResponse(
+        message,
+        isRagActive,
+        pdfUploaded,
+      );
+    } catch (error) {
+      botResponse = "Sorry, something went wrong. Please try again.";
+    }
+
+    await saveMessage(userid, finalChatId, botResponse, "bot");
 
     return NextResponse.json({
       success: true,
       chatId: finalChatId,
+      reply: botResponse,
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: error }, { status: 500 });
   }
 }

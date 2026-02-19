@@ -1,35 +1,17 @@
-import { v4 as uuid } from "uuid";
+// types/chat-type.ts
 
-export type Message = {
-  id: number;
-  text: string;
-  sender: "user" | "bot";
-  timestamp: Date;
-};
-
-export type UploadedDoc = {
-  id: string;
-  name: string;
-  filePath: string;
-  uploadedAt: Date;
-};
-
-export type Chat = {
+export type ChatMeta = {
   id: string;
   title: string;
-  messages: Message[];
   createdAt: Date;
-  documents: UploadedDoc[];
-  vectorNamespace: string;
+  updatedAt: Date;
+  isRagActive: boolean;
+  activeDocumentName: string | null;
 };
 
-export function createChat(title: string): Chat {
-  return {
-    id: uuid(),
-    title,
-    messages: [],
-    createdAt: new Date(),
-    documents: [],
-    vectorNamespace: uuid(),
-  };
-}
+export type Message = {
+  id: string;
+  text: string;
+  sender: "user" | "bot";
+  createdAt: Date;
+};

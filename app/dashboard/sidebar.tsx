@@ -1,14 +1,15 @@
 "use client";
 import { MessageSquare, Plus, Trash2, User } from "lucide-react";
-import { createChat, Chat } from "../types/chat-type";
 import { UploadDocument } from "./upload-doc-component";
+import { useAuth } from "../context/authcontext";
+import { ChatMeta } from "../types/chat-type";
 
 interface SideBarProps {
   sidebarOpen: boolean;
-  chats: Chat[];
-  setchats: (value: Chat[] | ((prev: Chat[]) => Chat[])) => void;
-  currentChatId: string;
-  setCurrentChatId: (id: string) => void;
+  chats: ChatMeta[];
+  setchats: (value: ChatMeta[] | ((prev: ChatMeta[]) => ChatMeta[])) => void;
+  currentChatId?: string | null;
+  setCurrentChatId: (id: string | null) => void;
   setIsRagActive: React.Dispatch<React.SetStateAction<boolean>>;
   setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
   pdfUploaded: boolean;
@@ -24,10 +25,11 @@ export const SideBar = ({
   setPdfUploaded,
   pdfUploaded,
 }: SideBarProps) => {
+  const { userid } = useAuth();
+  if (!userid) return;
+
   const createNewChat = () => {
-    const newChat = createChat("New Chat");
-    setchats((prev) => [newChat, ...prev]);
-    setCurrentChatId(newChat.id);
+    setCurrentChatId(null);
   };
 
   const deleteChat = (chatId: string) => {

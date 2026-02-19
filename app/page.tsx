@@ -18,7 +18,7 @@ export default function ChatbotLandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
+              <div className="bg-linear-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
                 <Bot className="h-6 w-6 text-white" />
               </div>
               <span className="text-xl font-bold text-gray-900">ChatAI</span>
@@ -53,7 +53,7 @@ export default function ChatbotLandingPage() {
               </Link>
 
               <Link href="/signup">
-                <button className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg font-medium">
+                <button className="px-6 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg font-medium">
                   Sign Up
                 </button>
               </Link>
@@ -63,7 +63,7 @@ export default function ChatbotLandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-blue-50 via-purple-50 to-pink-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full mb-6">
@@ -112,7 +112,7 @@ export default function ChatbotLandingPage() {
           {/* Demo Chat Preview */}
           <div className="mt-16 max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 flex items-center space-x-3">
+              <div className="bg-linear-to-r from-blue-600 to-purple-600 px-6 py-4 flex items-center space-x-3">
                 <div className="w-3 h-3 rounded-full bg-red-400"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
                 <div className="w-3 h-3 rounded-full bg-green-400"></div>
@@ -129,7 +129,7 @@ export default function ChatbotLandingPage() {
                   </div>
                 </div>
                 <div className="flex justify-end">
-                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-3 rounded-2xl max-w-md">
+                  <div className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-5 py-3 rounded-2xl max-w-md">
                     <p>Help me write a professional email</p>
                   </div>
                 </div>
@@ -160,7 +160,7 @@ export default function ChatbotLandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl hover:shadow-xl transition-shadow">
+            <div className="p-8 bg-linear-to-br from-blue-50 to-blue-100 rounded-2xl hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
@@ -173,7 +173,7 @@ export default function ChatbotLandingPage() {
               </p>
             </div>
 
-            <div className="p-8 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl hover:shadow-xl transition-shadow">
+            <div className="p-8 bg-linear-to-br from-purple-50 to-purple-100 rounded-2xl hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center mb-4">
                 <Zap className="h-6 w-6 text-white" />
               </div>
@@ -185,7 +185,7 @@ export default function ChatbotLandingPage() {
               </p>
             </div>
 
-            <div className="p-8 bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl hover:shadow-xl transition-shadow">
+            <div className="p-8 bg-linear-to-br from-pink-50 to-pink-100 rounded-2xl hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-pink-600 rounded-xl flex items-center justify-center mb-4">
                 <Shield className="h-6 w-6 text-white" />
               </div>
@@ -198,7 +198,7 @@ export default function ChatbotLandingPage() {
               </p>
             </div>
 
-            <div className="p-8 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl hover:shadow-xl transition-shadow">
+            <div className="p-8 bg-linear-to-br from-green-50 to-green-100 rounded-2xl hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center mb-4">
                 <MessageSquare className="h-6 w-6 text-white" />
               </div>
@@ -211,7 +211,7 @@ export default function ChatbotLandingPage() {
               </p>
             </div>
 
-            <div className="p-8 bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl hover:shadow-xl transition-shadow">
+            <div className="p-8 bg-linear-to-br from-orange-50 to-orange-100 rounded-2xl hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center mb-4">
                 <Star className="h-6 w-6 text-white" />
               </div>
@@ -240,7 +240,7 @@ export default function ChatbotLandingPage() {
       </div>
 
       {/* CTA Section */}
-      <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-600 to-purple-600">
+      <div className="py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-blue-600 to-purple-600">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to Get Started?

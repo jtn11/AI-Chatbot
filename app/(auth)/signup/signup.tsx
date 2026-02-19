@@ -41,7 +41,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full flex">
         {/* Left Side - Form */}
         <div className="w-full lg:w-1/2 p-8 lg:p-12">
@@ -191,7 +191,7 @@ const Signup: React.FC = () => {
             {/* Submit Button */}
             <button
               onClick={handleSubmit}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all font-medium text-lg shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 group"
+              className="w-full bg-linear-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all font-medium text-lg shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 group"
             >
               <span>Create Account</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -211,7 +211,7 @@ const Signup: React.FC = () => {
         </div>
 
         {/* Right Side - Branding */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-indigo-700 p-12 items-center justify-center">
+        <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-blue-600 to-indigo-700 p-12 items-center justify-center">
           <div className="text-white">
             <h2 className="text-4xl font-bold mb-6">Join ChatAI Today</h2>
             <p className="text-blue-100 text-lg mb-8 leading-relaxed">
@@ -219,7 +219,7 @@ const Signup: React.FC = () => {
             </p>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 flex-shrink-0 mt-1" />
+                <CheckCircle className="h-6 w-6 shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold mb-1">Intelligent Responses</h3>
                   <p className="text-blue-100 text-sm">
@@ -228,7 +228,7 @@ const Signup: React.FC = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 flex-shrink-0 mt-1" />
+                <CheckCircle className="h-6 w-6 shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold mb-1">Secure & Private</h3>
                   <p className="text-blue-100 text-sm">
@@ -237,7 +237,7 @@ const Signup: React.FC = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 flex-shrink-0 mt-1" />
+                <CheckCircle className="h-6 w-6 shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold mb-1">Free Forever</h3>
                   <p className="text-blue-100 text-sm">

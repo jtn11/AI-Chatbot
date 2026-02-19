@@ -4,25 +4,24 @@ import { SideBar } from "./sidebar";
 import { ChatArea } from "./chat-area";
 import { InputArea } from "./input-area";
 import { TopBar } from "./top-bar";
-import { Chat, Message, createChat } from "../types/chat-type";
+import { ChatMeta, Message } from "../types/chat-type";
 import { useAuth } from "../context/authcontext";
 
-const initialChat = createChat("New Chat");
-
 export default function Dashboard() {
-  const [chats, setChats] = useState<Chat[]>([initialChat]);
-  const [currentChatId, setCurrentChatId] = useState<string>(initialChat.id);
+  const [chats, setChats] = useState<ChatMeta[]>([]);
+  const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [isRagActive, setIsRagActive] = useState<boolean>(false);
   const [pdfUploaded, setPdfUploaded] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { userid } = useAuth();
 
-  const currentChat = chats.find((chat) => chat.id === currentChatId);
+  const currentChat = chats.find((chat) => chat.id === currentChatId) ?? null;
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -30,73 +29,83 @@ export default function Dashboard() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [currentChat?.messages]);
+  }, [messages]);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, [currentChatId]);
 
   const handleSend = async (): Promise<void> => {
-    if (!inputValue.trim() || !currentChat) return;
+    if (!inputValue.trim()) return;
+
+    const messageText = inputValue;
 
     const userMessage: Message = {
-      id: Date.now(),
-      text: inputValue,
+      id: Date.now().toString(),
+      text: messageText,
       sender: "user",
-      timestamp: new Date(),
+      createdAt: new Date(),
     };
 
     // Update chat with user message
-    setChats((prev) =>
-      prev.map((chat) =>
-        chat.id === currentChatId
-          ? {
-              ...chat,
-              messages: [...chat.messages, userMessage],
-              title:
-                chat.messages.length === 0
-                  ? inputValue.slice(0, 30) +
-                    (inputValue.length > 30 ? "..." : "")
-                  : chat.title,
-            }
-          : chat,
-      ),
-    );
+    setMessages((prev) => [...prev, userMessage]);
 
     setInputValue("");
     setIsTyping(true);
 
     // Simulate bot response
 
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userid,
-        chatId: currentChatId,
-        message: userMessage.text,
-      }),
+    console.log({
+      userid,
+      chatId: currentChatId,
+      message: messageText,
     });
 
-    const data = await res.json();
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid,
+          chatId: currentChatId,
+          message: messageText,
+        }),
+      });
 
-    const botMessage: Message = {
-      id: Date.now(),
-      text: data.reply,
-      sender: "bot",
-      timestamp: new Date(),
-    };
+      if (!res.ok) throw new Error("API failed");
 
-    setChats((prev) =>
-      prev.map((chat) =>
-        chat.id === currentChatId
-          ? { ...chat, messages: [...chat.messages, botMessage] }
-          : chat,
-      ),
-    );
-    setIsTyping(false);
+      const data = await res.json();
+
+      // If this was a new chat, register it in sidebar
+      if (!currentChatId) {
+        const newChat: ChatMeta = {
+          id: data.chatId,
+          title: messageText.slice(0, 30),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          isRagActive: false,
+          activeDocumentName: null,
+        };
+
+        setChats((prev) => [newChat, ...prev]);
+        setCurrentChatId(data.chatId);
+      }
+
+      const botMessage: Message = {
+        id: Date.now().toString(),
+        text: data.reply,
+        sender: "bot",
+        createdAt: new Date(),
+      };
+
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      console.error("Send error:", error);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   const handleKeyPress = (
@@ -134,6 +143,7 @@ export default function Dashboard() {
           isTyping={isTyping}
           messagesEndRef={messagesEndRef}
           setInputValue={setInputValue}
+          messages={messages}
         />
 
         {/* Input Area */}
