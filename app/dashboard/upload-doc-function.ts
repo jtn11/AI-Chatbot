@@ -1,7 +1,8 @@
 export function uploadPdf(
   setpdfloading: (value: boolean) => void,
-): Promise<any> {
-  return new Promise((resolve, reject) => {
+  chatId: string,
+  userId: string
+){
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "application/pdf";
@@ -12,6 +13,8 @@ export function uploadPdf(
 
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("chatId", chatId);
+      formData.append("userId", userId);
 
       try {
         setpdfloading(true);
@@ -25,12 +28,9 @@ export function uploadPdf(
 
         const data = await uploadRes.json();
         console.log("Upload Response:", data);
-        resolve(data);
       } catch (err) {
         console.error("Upload failed:", err);
-        reject(err);
       }
     };
     input.click();
-  });
-}
+  }

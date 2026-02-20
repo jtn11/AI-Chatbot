@@ -1,0 +1,125 @@
+JATIN SAINI 
+Ghaziabad, Uttar Pradesh | jatinsainii2003@gmail.com | +91 9650329139 | Github | LinkedIn | Portfolio 
+PROFESSIONAL SUMMARY 
+AI-focused Full-Stack Developer with hands-on experience building scalable web applications using React, Next.js, Node.js, and Firebase. Experienced 
+in
+ 
+integrating
+ 
+LLM
+ 
+APIs,
+ 
+designing
+ 
+Retrieval-Augmented
+ 
+Generation
+ 
+(RAG)
+ 
+systems,
+ 
+and
+ 
+developing
+ 
+AI-powered
+ 
+tools
+ 
+with
+ 
+structured
+ 
+prompt
+ 
+workflows.
+ 
+Strong
+ 
+foundation
+ 
+in
+ 
+REST
+ 
+APIs,
+ 
+real-time
+ 
+systems,
+ 
+and
+ 
+end-to-end
+ 
+product
+ 
+development,
+ 
+with
+ 
+a
+ 
+growing
+ 
+focus
+ 
+on
+ 
+system
+ 
+design,
+ 
+backend
+ 
+scalability,
+ 
+and
+ 
+production-ready
+ 
+AI
+ 
+integration.
+ 
+TECHNICAL SKILLS 
+Languages: JavaScript, TypeScript , Java Backend: Node.js , Express , REST APIs , Firebase Frontend: React.js, Next.js, Html , CSS , Tailwind CSS , Browser APIs (Media Recorder) Database: PostgreSQL, Firestore AI & Intelligent Systems : LLM APIs, Prompt Engineering, Retrieval-Augmented Generation (RAG), Embeddings, Agentic Workflows Tools & Platforms : Git, GitHub, CI/CD ,Vercel 
+PROJECTS 
+TailorAI – Resume Analysis Platform | GitHubDec 2025 - Jan 2026 Next.js, Node.js, Firebase (Firestore), LLM API, JSON Workflows ● Architected an AI-powered analysis engine using Next.js and LLM APIs to evaluate resumes against job descriptions with a focus on 
+structured
+ 
+JSON
+ 
+output
+.
+ 
+ ● Developed a full-stack system featuring persistent analysis history and real-time UI updates, utilizing Firebase Firestore for scalable data 
+management.
+ 
+ ● Optimized prompt-driven workflows to identify critical keyword gaps and generate match scores, improving the accuracy of improvement 
+suggestions
+ 
+for
+ 
+users.
+ 
+ 
+AI-Powered Speech Translator | GitHubOct 2025 - Nov 2025React.js, TypeScript, Groq’s Whisper API, MediaRecorder API, State Management ● Engineered a real-time speech translation application leveraging Groq’s Whisper API to transcribe and translate Hindi audio to English text. ● Implemented robust asynchronous API handling using FormData and the MediaRecorder API to capture high-quality audio streams. ● Designed comprehensive state management and error-handling protocols for microphone access and API failures to ensure a seamless user 
+experience.
+ 
+TaskNest – Collaborative Task Management Platform | GitHubSept 2025- Oct 2025 Next.js, React.js, TypeScript , Node.js , Express.js Firebase (Auth/Firestore) ● Built a collaborative productivity platform using Next.js and TypeScript , enabling real-time task synchronization across multiple user 
+workspaces.
+ ● Integrated a secure authentication system and Firebase Firestore backend to manage complex data relations and scalable user 
+assignments.
+ ● Developed a custom Node.js/Express.js backend to handle server-side logic and efficient database queries for real-time state updates 
+RAG-Powered AI Chatbot | GitHubDec 2025 - Jan 2026, Next.js, FastAPI, ChromaDB, HuggingFace Embeddings, Groq LLM, RAG Architecture ● Engineered a full Retrieval-Augmented Generation (RAG) system enabling users to upload PDFs and query private documents with 
+grounded
+ 
+responses.
+ ● Built a FastAPI backend to handle document ingestion, text extraction, chunking, and persistent vector storage using ChromaDB . ● Implemented semantic search using HuggingFace embeddings for accurate top-k chunk retrieval and context-aware response generation. ● Integrated Groq LLM for answer generation strictly based on retrieved document context. ● Designed a dynamic Next.js dashboard with conditional routing to switch between standard LLM chat and document-aware RAG responses. 
+CERTIFICATIONS & ACHIEVEMENTS 
+• Programming Fundamentals using Python - Infosys SpringBoard • AWS Cloud Foundations- AWS 
+EDUCATION 
+B.Tech in Computer Science KIET Group of Institutions | CGPA: 7.2/10.0

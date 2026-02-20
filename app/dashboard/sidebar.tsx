@@ -43,6 +43,8 @@ export const SideBar = ({
       className={`${sidebarOpen ? "w-64" : "w-0"} fixed md:sticky left-0 top-0 bottom-0 bg-gray-900 text-white transition-all duration-300 z-40 flex flex-col overflow-hidden`}
     >
       <UploadDocument
+        userid={userid}
+        chatid={currentChatId}
         setIsRagActive={setIsRagActive}
         setPdfUploaded={setPdfUploaded}
         pdfUploaded={pdfUploaded}

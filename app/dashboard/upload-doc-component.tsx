@@ -6,18 +6,27 @@ interface UploadDocumentProps {
   setIsRagActive: React.Dispatch<React.SetStateAction<boolean>>;
   setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
   pdfUploaded: boolean;
+  userid : string | null;
+  chatid : string | null | undefined;
 }
 
 export const UploadDocument = ({
   setIsRagActive,
   setPdfUploaded,
   pdfUploaded,
+  userid , 
+  chatid
+  
 }: UploadDocumentProps) => {
+
   const [pdfloading, setpdfloading] = useState(false);
 
+  if(!userid || !chatid) {
+    return ;
+  }
   const handleUpload = async () => {
     try {
-      await uploadPdf(setpdfloading); // async upload function
+      await uploadPdf(setpdfloading , chatid , userid); // async upload function
       setIsRagActive(true);
       setPdfUploaded(true);
     } catch (err) {
