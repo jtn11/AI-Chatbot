@@ -7,8 +7,6 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from pypdf import PdfReader
 from langchain_core.documents import Document
 
-
-
 load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

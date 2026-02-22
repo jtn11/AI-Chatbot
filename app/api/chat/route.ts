@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { userid, chatid, message } = await req.json();
+    const { userid, chatId, message } = await req.json();
 
     console.log({
       userid,
-      chatid,
+      chatId,
       message,
     });
 
@@ -19,11 +19,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let finalChatId = chatid;
-
+    let finalChatId = chatId;
     if (!finalChatId) {
       finalChatId = await createChat(userid);
     }
+
+    console.log("this is the current chatThread" , finalChatId)
 
     await saveMessage(userid, finalChatId, message, "user");
 
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest) {
       { activeDocname: chatDoc?.activeDocumentName },
       { isRagActive: isRagActive },
       { pdfUploaded: pdfUploaded },
+      { "fetchedChatid" : chatDoc?.chatId}
     );
 
     let botResponse;

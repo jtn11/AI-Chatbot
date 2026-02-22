@@ -77,9 +77,12 @@ export default function Dashboard() {
       if (!res.ok) throw new Error("API failed");
 
       const data = await res.json();
+      console.log("This is the data after /api/chat", data)
+      setCurrentChatId(data.chatId)
+      console.log("Data to see chatid",data)
 
       // If this was a new chat, register it in sidebar
-      if (!currentChatId) {
+      if (currentChat === null) {
         const newChat: ChatMeta = {
           id: data.chatId,
           title: messageText.slice(0, 30),
