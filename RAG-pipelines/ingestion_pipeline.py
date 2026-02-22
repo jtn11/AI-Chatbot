@@ -21,16 +21,6 @@ def extract_text_from_pdf(pdf_path: str) -> str:
         text += (page.extract_text() or "") + "\n"
     return text
 
-# def save_text_to_docs(text: str, filename: str , user_id: str , chat_id: str):
-#     docs_dir = os.path.join(BASE_DIR, "docs" , user_id , chat_id)
-#     os.makedirs(docs_dir, exist_ok=True)
-
-#     file_path = os.path.join(docs_dir, f"{filename}.txt")
-#     with open(file_path, "w", encoding="utf-8") as f:
-#         f.write(text)
-
-#     print(f"Saved extracted text to: {file_path}")
-
 def normalize_extracted_text(text: str) -> str:
     text = re.sub(r'(?<=\w)\s(?=\w)', '', text)
 
@@ -40,36 +30,6 @@ def normalize_extracted_text(text: str) -> str:
 
     return text.strip()
 
-
-# def load_documents(docs_path):
-#     """Load all text files from the docs directory"""
-#     print(f"Loading documents from {docs_path}...")
-    
-#     # Check if docs directory exists
-#     if not os.path.exists(docs_path):
-#         raise FileNotFoundError(f"The directory {docs_path} does not exist. Please create it and add your company files.")
-    
-#     # Load all .txt files from the docs directory
-#     loader = DirectoryLoader(
-#         path=docs_path,
-#         glob="*.txt",
-#         loader_cls=TextLoader
-#     )
-    
-#     documents = loader.load()
-    
-#     if len(documents) == 0:
-#         raise FileNotFoundError(f"No .txt files found in {docs_path}. Please add your company documents.")
-    
-   
-#     for i, doc in enumerate(documents[:1]):  # Show first 2 documents
-#         print(f"\nDocument {i}:")
-#         print(f"  Source: {doc.metadata['source']}")
-#         print(f"  Content length: {len(doc.page_content)} characters")
-#         print(f"  Content preview: {doc.page_content[:100]}...")
-#         print(f"  metadata: {doc.metadata}")
-
-#     return documents
 
 def split_documents(documents, chunk_size=1000, chunk_overlap=0):
     """Split documents into smaller chunks with overlap"""

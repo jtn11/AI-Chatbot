@@ -99,12 +99,3 @@ def clear_vectors():
         shutil.rmtree(persist_directory)
 
     return {"status": "cleared"}
-
-
-# @app.post("/_debug")
-# def debug(req: QueryRequest):
-#     docs = retrieve_chunks(req.query)
-#     return {
-#         "count": len(docs),
-#         "samples": [d.page_content[:200] for d in docs]
-#     }
