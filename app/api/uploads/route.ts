@@ -2,14 +2,27 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
+import { createChat } from "@/app/lib/chat-service";
+import { getAdminDb } from "@/firebase/firebase-admin";
+import { serverTimestamp } from "firebase/database";
 
 export async function POST(req: Request) {
+  try {
   const formData = await req.formData();
   const file = formData.get("file") as File;
+  const userId = formData.get("userId") as string;
+  let chatId = formData.get("chatId") as string | null;
 
-  if (!file) {
-    return NextResponse.json({ error: "No file" }, { status: 400 });
-  }
+      if (!file || !userId) {
+      return NextResponse.json(
+        { error: "Missing file or userId" },
+        { status: 400 }
+      );
+    }
+     if (!chatId) {
+      chatId = await createChat(userId);
+    }
+
 
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
@@ -25,8 +38,33 @@ export async function POST(req: Request) {
   await fetch("http://localhost:8000/ingest", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ filePath }),
+    body: JSON.stringify({ filePath , userId , chatId }), // we need to send chatId to backend so each file has a seperate vectorstore
   });
 
-  return NextResponse.json({ success: true });
+  const db = getAdminDb();
+
+    await db
+      .collection("users")
+      .doc(userId)
+      .collection("chats")
+      .doc(chatId)
+      .set({
+        activeDocumentName: file.name,
+        storedFileName: safeName,
+        isRagActive: true,
+        updatedAt: serverTimestamp(),
+      });
+
+    return NextResponse.json({
+      success: true,
+      chatId,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Upload failed" },
+      { status: 500 }
+    );
+  }
 }

@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { userid, chatId, message } = await req.json();
+    const { userid, chatid, message } = await req.json();
 
     console.log({
       userid,
-      chatId,
+      chatid,
       message,
     });
 
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let finalChatId = chatId;
+    let finalChatId = chatid;
 
     if (!finalChatId) {
       finalChatId = await createChat(userid);
@@ -31,12 +31,20 @@ export async function POST(req: NextRequest) {
     const isRagActive = chatDoc?.isRagActive ?? false;
     const pdfUploaded = chatDoc?.activeDocumentName ? true : false;
 
+    console.log(
+      { activeDocname: chatDoc?.activeDocumentName },
+      { isRagActive: isRagActive },
+      { pdfUploaded: pdfUploaded },
+    );
+
     let botResponse;
     try {
       botResponse = await GenerateBotResponse(
         message,
         isRagActive,
         pdfUploaded,
+        userid,
+        finalChatId,
       );
     } catch (error) {
       botResponse = "Sorry, something went wrong. Please try again.";

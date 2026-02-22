@@ -44,10 +44,10 @@ export const SideBar = ({
     >
       <UploadDocument
         userid={userid}
-        chatid={currentChatId}
         setIsRagActive={setIsRagActive}
         setPdfUploaded={setPdfUploaded}
         pdfUploaded={pdfUploaded}
+        setCurrentChatId={setCurrentChatId}
       />
 
       {/* Sidebar Header */}

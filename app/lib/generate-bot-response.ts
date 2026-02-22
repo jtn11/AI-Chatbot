@@ -2,6 +2,8 @@ export async function GenerateBotResponse(
   userInput: string,
   isRagActive: boolean,
   pdfUploaded: boolean,
+  userid: string,
+  finalChatId: string,
 ) {
   try {
     const res = await fetch("http://localhost:8000/chat", {
@@ -11,6 +13,8 @@ export async function GenerateBotResponse(
       },
       body: JSON.stringify({
         query: userInput,
+        userId: userid,
+        chatId: finalChatId,
         is_rag_active: isRagActive,
         is_pdf_uploaded: pdfUploaded,
       }),

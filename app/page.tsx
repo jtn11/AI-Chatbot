@@ -46,13 +46,13 @@ export default function ChatbotLandingPage() {
             </div>
 
             <div className="flex items-center space-x-3">
-              <Link href="/signin">
+              <Link href="auth/signin">
                 <button className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors">
                   Sign In
                 </button>
               </Link>
 
-              <Link href="/signup">
+              <Link href="auth/signup">
                 <button className="px-6 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg font-medium">
                   Sign Up
                 </button>

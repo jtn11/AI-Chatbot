@@ -6,7 +6,7 @@ import shutil
 import os
 
 
-from ingestion_pipeline import run_ingestion
+from ingestion_pipeline import BASE_DIR, run_ingestion
 from retrieval_pipeline import retrieve_chunks
 from generation_pipeline import generate_answer
 from generation_pipeline import generate_llm_answer
@@ -26,11 +26,15 @@ app.add_middleware(
 
 class QueryRequest(BaseModel):
     query: str 
+    userId: str
+    chatId: str
     is_rag_active : bool
     is_pdf_uploaded : bool
 
 class IngestRequest(BaseModel):
     filePath: str
+    userId: str
+    chatId: str
 
 @app.post("/ingest")
 def ingest(req: IngestRequest):
@@ -38,23 +42,35 @@ def ingest(req: IngestRequest):
     Ingest a document (PDF already saved on disk).
     This runs chunking + embedding and stores vectors.
     """
-    run_ingestion(req.filePath)
+    run_ingestion(req.filePath , req.userId , req.chatId)
     return {"status": "ingestion completed"}
 
 
-def rag_chat(query: str) -> str:
-    """
-    Full RAG flow:
-    1. Retrieve relevant chunks
-    2. Generate grounded answer using Groq
-    """
-    docs = retrieve_chunks(query)
+def rag_chat(query: str, user_id: str, chat_id: str) -> str:
+
+
+    print(">>> ENTERED RAG CHAT <<<")
+    print("User:", user_id)
+    print("Chat:", chat_id)
+
+    persist_directory = os.path.join(
+        BASE_DIR,
+        "db",
+        user_id,
+        chat_id
+    )
+
+    if not os.path.exists(persist_directory):
+        # No vectorstore for this chat
+        return llm_chat(query)
+
+    docs = retrieve_chunks(query, persist_directory)
     chunks = [doc.page_content for doc in docs]
     return generate_answer(query, chunks)
 
+
 def llm_chat(query : str) -> str :
     return generate_llm_answer(query)
-
 
 @app.post("/chat")
 def chat(req: QueryRequest):
@@ -62,10 +78,14 @@ def chat(req: QueryRequest):
     Production chat endpoint.
     Returns a final, grounded answer.
     """
+    print("RAG Active:", req.is_rag_active)
+    print("PDF Uploaded:", req.is_pdf_uploaded)
+    print("User:", req.userId)
+    print("Chat:", req.chatId)
     if req.is_rag_active and req.is_pdf_uploaded:
-        answer = rag_chat(req.query)
+       answer = rag_chat(req.query, req.userId, req.chatId)
     else:
-        answer = llm_chat(req.query )
+       answer = llm_chat(req.query )
     return {
         "query": req.query,
         "answer": answer
@@ -88,4 +108,3 @@ def clear_vectors():
 #         "count": len(docs),
 #         "samples": [d.page_content[:200] for d in docs]
 #     }
-
