@@ -1,6 +1,7 @@
 export async function uploadPdf(
   setpdfloading: (value: boolean) => void,
   userId: string,
+  currentChatId?: string | null,
 ) {
   return new Promise<{ chatId: string }>((resolve, reject) => {
     const input = document.createElement("input");
@@ -14,6 +15,11 @@ export async function uploadPdf(
       const formData = new FormData();
       formData.append("file", file);
       formData.append("userId", userId);
+
+      // sending currentChatId only if it exist i.e., now chat have to be updated
+      if (currentChatId) {
+        formData.append("currentChatId", currentChatId);
+      }
 
       try {
         setpdfloading(true);

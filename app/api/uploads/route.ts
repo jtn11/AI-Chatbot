@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const formData = await req.formData();
   const file = formData.get("file") as File;
   const userId = formData.get("userId") as string;
-  let chatId = formData.get("chatId") as string | null;
+  let chatId = formData.get("currentChatId") as string | null;
 
       if (!file || !userId) {
       return NextResponse.json(
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-     if (!chatId) {
+    if (!chatId) {
       chatId = await createChat(userId);
     }
 

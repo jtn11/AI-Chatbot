@@ -1,12 +1,12 @@
 import { FilePlus, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { uploadPdf } from "./upload-doc-function";
-import { set } from "firebase/database";
 
 interface UploadDocumentProps {
   setIsRagActive: React.Dispatch<React.SetStateAction<boolean>>;
   setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentChatId: (id: string | null) => void;
+  currentChatId?: string | null;
   pdfUploaded: boolean;
   userid: string | null;
 }
@@ -17,13 +17,14 @@ export const UploadDocument = ({
   pdfUploaded,
   userid,
   setCurrentChatId,
+  currentChatId,
 }: UploadDocumentProps) => {
   const [pdfloading, setpdfloading] = useState(false);
 
   const handleUpload = async () => {
     try {
       if (!userid) return;
-      const res = await uploadPdf(setpdfloading, userid); // async upload function
+      const res = await uploadPdf(setpdfloading, userid, currentChatId); // async upload function
       setCurrentChatId(res.chatId);
       setPdfUploaded(true);
     } catch (err) {

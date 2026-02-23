@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       finalChatId = await createChat(userid);
     }
 
-    console.log("this is the current chatThread" , finalChatId)
+    console.log("this is the current chatThread", finalChatId);
 
     await saveMessage(userid, finalChatId, message, "user");
 
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       { activeDocname: chatDoc?.activeDocumentName },
       { isRagActive: isRagActive },
       { pdfUploaded: pdfUploaded },
-      { "fetchedChatid" : chatDoc?.chatId}
+      { fetchedChatid: chatDoc?.chatId },
     );
 
     let botResponse;

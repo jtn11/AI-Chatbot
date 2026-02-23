@@ -48,6 +48,7 @@ export const SideBar = ({
         setPdfUploaded={setPdfUploaded}
         pdfUploaded={pdfUploaded}
         setCurrentChatId={setCurrentChatId}
+        currentChatId={currentChatId}
       />
 
       {/* Sidebar Header */}
