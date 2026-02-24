@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
         isRagActive,
         pdfUploaded,
         userid,
-        finalChatId,
+        finalChatId, 
       );
     } catch (error) {
       botResponse = "Sorry, something went wrong. Please try again.";

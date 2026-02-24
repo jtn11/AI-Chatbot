@@ -10,7 +10,6 @@ interface SideBarProps {
   setchats: (value: ChatMeta[] | ((prev: ChatMeta[]) => ChatMeta[])) => void;
   currentChatId?: string | null;
   setCurrentChatId: (id: string | null) => void;
-  setIsRagActive: React.Dispatch<React.SetStateAction<boolean>>;
   setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
   pdfUploaded: boolean;
 }
@@ -21,7 +20,6 @@ export const SideBar = ({
   setchats,
   currentChatId,
   setCurrentChatId,
-  setIsRagActive,
   setPdfUploaded,
   pdfUploaded,
 }: SideBarProps) => {
@@ -44,7 +42,6 @@ export const SideBar = ({
     >
       <UploadDocument
         userid={userid}
-        setIsRagActive={setIsRagActive}
         setPdfUploaded={setPdfUploaded}
         pdfUploaded={pdfUploaded}
         setCurrentChatId={setCurrentChatId}

@@ -13,7 +13,6 @@ export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-  const [isRagActive, setIsRagActive] = useState<boolean>(false);
   const [pdfUploaded, setPdfUploaded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -129,7 +128,6 @@ export default function Dashboard() {
           setchats={setChats}
           currentChatId={currentChatId}
           setCurrentChatId={setCurrentChatId}
-          setIsRagActive={setIsRagActive}
           setPdfUploaded={setPdfUploaded}
           pdfUploaded={pdfUploaded}
         />

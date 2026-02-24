@@ -3,7 +3,6 @@ import { useState } from "react";
 import { uploadPdf } from "./upload-doc-function";
 
 interface UploadDocumentProps {
-  setIsRagActive: React.Dispatch<React.SetStateAction<boolean>>;
   setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentChatId: (id: string | null) => void;
   currentChatId?: string | null;
@@ -12,7 +11,6 @@ interface UploadDocumentProps {
 }
 
 export const UploadDocument = ({
-  setIsRagActive,
   setPdfUploaded,
   pdfUploaded,
   userid,
@@ -36,10 +34,10 @@ export const UploadDocument = ({
 
   const handleDelete = async () => {
     setPdfUploaded(false);
-    setIsRagActive(false);
 
-    await fetch("http://localhost:8000/clear", {
+    await fetch("/api/remove-doc", {
       method: "POST",
+      body : JSON.stringify({userid , currentChatId})
     });
   };
 
