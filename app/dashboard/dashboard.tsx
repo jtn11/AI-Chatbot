@@ -130,6 +130,7 @@ export default function Dashboard() {
           setCurrentChatId={setCurrentChatId}
           setPdfUploaded={setPdfUploaded}
           pdfUploaded={pdfUploaded}
+          setMessages={setMessages}
         />
       )}
 
@@ -140,7 +141,7 @@ export default function Dashboard() {
 
         {/* Messages Area */}
         <ChatArea
-          currentChat={currentChat}
+          currentChatId={currentChatId}
           isTyping={isTyping}
           messagesEndRef={messagesEndRef}
           setInputValue={setInputValue}

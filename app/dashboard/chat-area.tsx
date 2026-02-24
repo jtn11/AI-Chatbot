@@ -1,30 +1,26 @@
 import { Sparkles, User } from "lucide-react";
-import ChatsNotLoaded from "./chat-loading-error";
 import { ChatMeta, Message } from "../types/chat-type";
 import { EmptyState } from "./empty-state";
 
 interface chatAreaProps {
-  currentChat: ChatMeta | null;
   isTyping: boolean;
+  currentChatId : string | null; 
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   messages: Message[];
 }
 
 export const ChatArea = ({
-  currentChat,
+  currentChatId,
   isTyping,
   messagesEndRef,
   setInputValue,
   messages,
 }: chatAreaProps) => {
-  // if (!currentChat) {
-  //   return <ChatsNotLoaded />;
-  // }
 
   return (
     <div className="flex-1 overflow-y-auto">
-      {messages.length === 0 ? (
+      {!currentChatId && messages.length === 0 ? (
         // Empty State
         <EmptyState setInputValue={setInputValue} />
       ) : (

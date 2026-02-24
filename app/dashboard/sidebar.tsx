@@ -2,7 +2,7 @@
 import { MessageSquare, Plus, Trash2, User } from "lucide-react";
 import { UploadDocument } from "./upload-doc-component";
 import { useAuth } from "../context/authcontext";
-import { ChatMeta } from "../types/chat-type";
+import { ChatMeta, Message } from "../types/chat-type";
 
 interface SideBarProps {
   sidebarOpen: boolean;
@@ -11,6 +11,7 @@ interface SideBarProps {
   currentChatId?: string | null;
   setCurrentChatId: (id: string | null) => void;
   setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   pdfUploaded: boolean;
 }
 
@@ -22,12 +23,14 @@ export const SideBar = ({
   setCurrentChatId,
   setPdfUploaded,
   pdfUploaded,
+  setMessages
 }: SideBarProps) => {
   const { userid } = useAuth();
   if (!userid) return;
 
   const createNewChat = () => {
     setCurrentChatId(null);
+    setMessages([]);
   };
 
   const deleteChat = (chatId: string) => {
