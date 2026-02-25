@@ -108,7 +108,7 @@ export default function Dashboard() {
     } finally {
       setIsTyping(false);
     }
-  };
+  };     
 
   const handleKeyPress = (
     e: React.KeyboardEvent<HTMLTextAreaElement>,
