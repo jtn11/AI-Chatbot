@@ -37,7 +37,7 @@ export const UploadDocument = ({
 
     await fetch("/api/remove-doc", {
       method: "POST",
-      body : JSON.stringify({userid , currentChatId})
+      body: JSON.stringify({ userid, currentChatId }),
     });
   };
 

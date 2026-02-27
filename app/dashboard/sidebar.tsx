@@ -23,7 +23,7 @@ export const SideBar = ({
   setCurrentChatId,
   setPdfUploaded,
   pdfUploaded,
-  setMessages
+  setMessages,
 }: SideBarProps) => {
   const { userid } = useAuth();
   if (!userid) return;

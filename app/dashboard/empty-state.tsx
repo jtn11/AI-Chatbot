@@ -1,7 +1,7 @@
 import { Sparkles } from "lucide-react";
 
 interface EmptyStateProps {
-  setInputValue : React.Dispatch<React.SetStateAction<string>>;
+  setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const EmptyState = ({ setInputValue }: EmptyStateProps) => {

@@ -4,7 +4,7 @@ import { EmptyState } from "./empty-state";
 
 interface chatAreaProps {
   isTyping: boolean;
-  currentChatId : string | null; 
+  currentChatId: string | null;
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   messages: Message[];
@@ -17,7 +17,6 @@ export const ChatArea = ({
   setInputValue,
   messages,
 }: chatAreaProps) => {
-
   return (
     <div className="flex-1 overflow-y-auto">
       {!currentChatId && messages.length === 0 ? (
