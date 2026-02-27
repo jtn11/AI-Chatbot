@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { ChatMeta, Message } from "../types/chat-type";
 import { useAuth } from "./authcontext";

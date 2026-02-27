@@ -1,11 +1,10 @@
 import { FilePlus, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { uploadPdf } from "./upload-doc-function";
+import { useChat } from "../context/chatContext";
 
 interface UploadDocumentProps {
   setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentChatId: (id: string | null) => void;
-  currentChatId?: string | null;
   pdfUploaded: boolean;
   userid: string | null;
 }
@@ -14,9 +13,8 @@ export const UploadDocument = ({
   setPdfUploaded,
   pdfUploaded,
   userid,
-  setCurrentChatId,
-  currentChatId,
 }: UploadDocumentProps) => {
+  const { currentChatId, setCurrentChatId } = useChat();
   const [pdfloading, setpdfloading] = useState(false);
 
   const handleUpload = async () => {

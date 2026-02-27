@@ -1,22 +1,20 @@
 import { Sparkles, User } from "lucide-react";
-import { ChatMeta, Message } from "../types/chat-type";
 import { EmptyState } from "./empty-state";
+import { useChat } from "../context/chatContext";
 
 interface chatAreaProps {
   isTyping: boolean;
-  currentChatId: string | null;
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
-  messages: Message[];
 }
 
 export const ChatArea = ({
-  currentChatId,
   isTyping,
   messagesEndRef,
   setInputValue,
-  messages,
 }: chatAreaProps) => {
+  const { currentChatId, messages } = useChat();
+
   return (
     <div className="flex-1 overflow-y-auto">
       {!currentChatId && messages.length === 0 ? (

@@ -3,41 +3,31 @@ import { MessageSquare, Plus, Trash2, User } from "lucide-react";
 import { UploadDocument } from "./upload-doc-component";
 import { useAuth } from "../context/authcontext";
 import { ChatMeta, Message } from "../types/chat-type";
+import { useChat } from "../context/chatContext";
 
 interface SideBarProps {
   sidebarOpen: boolean;
-  chats: ChatMeta[];
-  setchats: (value: ChatMeta[] | ((prev: ChatMeta[]) => ChatMeta[])) => void;
-  currentChatId?: string | null;
-  setCurrentChatId: (id: string | null) => void;
   setPdfUploaded: React.Dispatch<React.SetStateAction<boolean>>;
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   pdfUploaded: boolean;
 }
 
 export const SideBar = ({
   sidebarOpen,
-  chats,
-  setchats,
-  currentChatId,
-  setCurrentChatId,
   setPdfUploaded,
   pdfUploaded,
-  setMessages,
 }: SideBarProps) => {
   const { userid } = useAuth();
+  const {
+    chats,
+    createNewChat,
+    currentChatId,
+    setCurrentChatId,
+    refreshChats,
+    deleteChat,
+    setMessages,
+  } = useChat();
+
   if (!userid) return;
-
-  const createNewChat = () => {
-    setCurrentChatId(null);
-    setMessages([]);
-  };
-
-  const deleteChat = (chatId: string) => {
-    if (chatId != chats[0].id) {
-      setchats((prev) => prev.filter((chat) => chat.id !== chatId));
-    }
-  };
 
   return (
     <div
@@ -47,8 +37,6 @@ export const SideBar = ({
         userid={userid}
         setPdfUploaded={setPdfUploaded}
         pdfUploaded={pdfUploaded}
-        setCurrentChatId={setCurrentChatId}
-        currentChatId={currentChatId}
       />
 
       {/* Sidebar Header */}

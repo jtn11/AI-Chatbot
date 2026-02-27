@@ -6,21 +6,18 @@ import { InputArea } from "./input-area";
 import { TopBar } from "./top-bar";
 import { ChatMeta, Message } from "../types/chat-type";
 import { useAuth } from "../context/authcontext";
+import { useChat } from "../context/chatContext";
 
 export default function Dashboard() {
-  const [chats, setChats] = useState<ChatMeta[]>([]);
-  const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [pdfUploaded, setPdfUploaded] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { userid } = useAuth();
-
-  const currentChat = chats.find((chat) => chat.id === currentChatId) ?? null;
+  const { currentChatId, setCurrentChatId, setMessages, messages } = useChat();
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -80,21 +77,6 @@ export default function Dashboard() {
       setCurrentChatId(data.chatId);
       console.log("Data to see chatid", data);
 
-      // If this was a new chat, register it in sidebar
-      if (currentChat === null) {
-        const newChat: ChatMeta = {
-          id: data.chatId,
-          title: messageText.slice(0, 30),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          isRagActive: false,
-          activeDocumentName: null,
-        };
-
-        setChats((prev) => [newChat, ...prev]);
-        setCurrentChatId(data.chatId);
-      }
-
       const botMessage: Message = {
         id: Date.now().toString(),
         text: data.reply,
@@ -124,13 +106,8 @@ export default function Dashboard() {
       {sidebarOpen && (
         <SideBar
           sidebarOpen={sidebarOpen}
-          chats={chats}
-          setchats={setChats}
-          currentChatId={currentChatId}
-          setCurrentChatId={setCurrentChatId}
           setPdfUploaded={setPdfUploaded}
           pdfUploaded={pdfUploaded}
-          setMessages={setMessages}
         />
       )}
 
@@ -141,11 +118,9 @@ export default function Dashboard() {
 
         {/* Messages Area */}
         <ChatArea
-          currentChatId={currentChatId}
           isTyping={isTyping}
           messagesEndRef={messagesEndRef}
           setInputValue={setInputValue}
-          messages={messages}
         />
 
         {/* Input Area */}
