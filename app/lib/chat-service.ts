@@ -1,5 +1,5 @@
 import { getAdminDb } from "@/firebase/firebase-admin";
-import { serverTimestamp } from "firebase/database";
+import { FieldValue } from "firebase-admin/firestore";
 
 const db = getAdminDb();
 export async function createChat(userId: string) {
@@ -9,8 +9,8 @@ export async function createChat(userId: string) {
     .collection("chats")
     .add({
       title: "New Chat",
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
       isRagActive: false,
       activeDocumentName: null,
     });
@@ -45,7 +45,7 @@ export async function saveMessage(
     .add({
       text,
       sender,
-      createdAt: serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
     });
 
   // update chat updatedAt
@@ -55,6 +55,6 @@ export async function saveMessage(
     .collection("chats")
     .doc(chatId)
     .update({
-      updatedAt: serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
     });
 }
