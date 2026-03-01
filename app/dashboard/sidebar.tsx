@@ -2,7 +2,6 @@
 import { MessageSquare, Plus, Trash2, User } from "lucide-react";
 import { UploadDocument } from "./upload-doc-component";
 import { useAuth } from "../context/authcontext";
-import { ChatMeta, Message } from "../types/chat-type";
 import { useChat } from "../context/chatContext";
 
 interface SideBarProps {
@@ -17,17 +16,17 @@ export const SideBar = ({
   pdfUploaded,
 }: SideBarProps) => {
   const { userid } = useAuth();
-  const {
-    chats,
-    createNewChat,
-    currentChatId,
-    setCurrentChatId,
-    refreshChats,
-    deleteChat,
-    setMessages,
-  } = useChat();
+  const { chats, createNewChat, currentChatId, setCurrentChatId, deleteChat } =
+    useChat();
+
+  const { loadMessages } = useChat();
 
   if (!userid) return;
+
+  const handleCurrentChatId = (currentChatId: string) => {
+    setCurrentChatId(currentChatId);
+    loadMessages(currentChatId);
+  };
 
   return (
     <div
@@ -57,7 +56,7 @@ export const SideBar = ({
           <div
             key={chat.id}
             onClick={() => {
-              setCurrentChatId(chat.id);
+              handleCurrentChatId(chat.id);
               console.log("ChatId :", chat.id);
             }}
             className={`group flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${

@@ -32,17 +32,22 @@ export const ChatContextProvider = ({
     if (!userid) {
       return;
     }
-    const res = await fetch(`/api/chats?userId=${userid}`);
+    const res = await fetch(`/api/chat/${userid}`);
     const data = await res.json();
     setChats(data.chats || []);
   };
 
   const loadMessages = async (chatId: string) => {
-    if (!userid) {
-      const res = await fetch(`/api/messages?chatId=${chatId}`);
-      const data = await res.json();
-      setMessages(data.messages || []);
-    }
+    const res = await fetch(`/api/messages/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userid, chatId }),
+    });
+    const data = await res.json();
+    console.log("Messages from /api/messages", data.messages);
+    setMessages(data.messages || []);
   };
 
   const createNewChat = () => {
