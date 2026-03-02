@@ -29,6 +29,7 @@ export async function POST(req: Request) {
       success: true,
       uid: uid,
       email: email,
+      username: username,
     });
   } catch (error: any) {
     return NextResponse.json(

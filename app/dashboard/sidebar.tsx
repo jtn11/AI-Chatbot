@@ -15,7 +15,7 @@ export const SideBar = ({
   setPdfUploaded,
   pdfUploaded,
 }: SideBarProps) => {
-  const { userid } = useAuth();
+  const { userid , userName } = useAuth();
   const { chats, createNewChat, currentChatId, setCurrentChatId, deleteChat } =
     useChat();
 
@@ -87,7 +87,7 @@ export const SideBar = ({
             <User className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">User Account</p>
+            <p className="text-sm font-medium truncate">{!userName ? "Guest" : userName}</p>
             <p className="text-xs text-gray-400">Free Plan</p>
           </div>
         </div>
