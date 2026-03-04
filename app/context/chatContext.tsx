@@ -73,7 +73,7 @@ export const ChatContextProvider = ({
   useEffect(() => {
     if (!userid) return;
     refreshChats();
-  }, [userid]);
+  }, [userid , currentChatId]);
 
   useEffect(() => {
     if (!currentChatId) {
