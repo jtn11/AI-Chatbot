@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     let finalChatId = chatId;
     if (!finalChatId) {
-      finalChatId = await createChat(userid);
+      finalChatId = await createChat(userid, message);
     }
 
     console.log("this is the current chatThread", finalChatId);
