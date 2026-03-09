@@ -13,6 +13,7 @@ interface ChatContextTypes {
   refreshChats: () => Promise<void>;
   loadMessages: (chatId: string) => Promise<void>;
   deleteChat: (chatId: string) => void;
+  isRagActive: boolean;
 }
 
 const ChatContext = createContext<ChatContextTypes | undefined>(undefined);
@@ -27,6 +28,7 @@ export const ChatContextProvider = ({
   const [chats, setChats] = useState<ChatMeta[]>([]);
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isRagActive , setIsRagActive] = useState<boolean>(false);
 
   const refreshChats = async () => {
     if (!userid) {
@@ -34,6 +36,7 @@ export const ChatContextProvider = ({
     }
     const res = await fetch(`/api/chat/${userid}`);
     const data = await res.json();
+    console.log("Chats from /api/chat", data.chats);
     setChats(data.chats || []);
   };
 
@@ -48,6 +51,7 @@ export const ChatContextProvider = ({
     const data = await res.json();
     console.log("Messages from /api/messages", data.messages);
     setMessages(data.messages || []);
+    setIsRagActive(data.isRagActive);
   };
 
   const createNewChat = () => {
@@ -99,6 +103,7 @@ export const ChatContextProvider = ({
         loadMessages,
         createNewChat,
         deleteChat,
+        isRagActive,
       }}
     >
       {children}

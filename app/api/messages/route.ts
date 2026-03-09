@@ -9,6 +9,15 @@ export async function POST(req: NextRequest) {
     return new Response("Unauthorized", { status: 401 });
   }
 
+  const chatDoc = await db
+    .collection("users")
+    .doc(userid)
+    .collection("chats")
+    .doc(chatId)
+    .get();
+
+  const isRagActive = chatDoc.data()?.isRagActive || false;
+
   const messagesSnapshot = await db
     .collection("users")
     .doc(userid)
@@ -23,5 +32,5 @@ export async function POST(req: NextRequest) {
     ...doc.data(),
   }));
 
-  return NextResponse.json({ messages });
+  return NextResponse.json({ messages, isRagActive });
 }
